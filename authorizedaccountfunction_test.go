@@ -29,8 +29,8 @@ func TestAuthorizedAccountFunctionAddWithOptionalParams(t *testing.T) {
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		nvcf.AuthorizedAccountFunctionAddParams{
 			AuthorizedParty: nvcf.F(nvcf.AuthorizedAccountFunctionAddParamsAuthorizedParty{
-				ClientID: nvcf.F("clientId"),
 				NcaID:    nvcf.F("ncaId"),
+				ClientID: nvcf.F("clientId"),
 			}),
 		},
 	)
@@ -59,8 +59,8 @@ func TestAuthorizedAccountFunctionRemoveWithOptionalParams(t *testing.T) {
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		nvcf.AuthorizedAccountFunctionRemoveParams{
 			AuthorizedParty: nvcf.F(nvcf.AuthorizedAccountFunctionRemoveParamsAuthorizedParty{
-				ClientID: nvcf.F("clientId"),
 				NcaID:    nvcf.F("ncaId"),
+				ClientID: nvcf.F("clientId"),
 			}),
 		},
 	)
