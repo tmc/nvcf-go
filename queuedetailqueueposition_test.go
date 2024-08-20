@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal/testutil"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal/testutil"
+	"github.com/tmc/nvcf-go/option"
 )
 
 func TestQueueDetailQueuePositionGet(t *testing.T) {

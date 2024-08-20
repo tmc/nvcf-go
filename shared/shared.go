@@ -5,7 +5,7 @@ package shared
 import (
 	"time"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/apijson"
 )
 
 // Parties authorized to invoke function

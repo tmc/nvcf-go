@@ -34,7 +34,7 @@ To use a local version of this library from source in another project, edit the 
 directive. This can be done through the CLI with the following:
 
 ```bash
-go mod edit -replace github.com/stainless-sdks/nvcf-go=/path/to/nvcf-go
+go mod edit -replace github.com/tmc/nvcf-go=/path/to/nvcf-go
 ```
 
 ## Running tests
