@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/stainless-sdks/nvcf-go/internal/apijson"
 	"github.com/stainless-sdks/nvcf-go/internal/apiquery"
@@ -141,10 +142,14 @@ func (r deploymentResponseJSON) RawJSON() string {
 
 // Function deployment response
 type DeploymentResponseDeployment struct {
+	// Function deployment creation timestamp
+	CreatedAt time.Time `json:"createdAt,required" format:"date-time"`
 	// Function deployment details
 	DeploymentSpecifications []DeploymentResponseDeploymentDeploymentSpecification `json:"deploymentSpecifications,required"`
 	// Function id
 	FunctionID string `json:"functionId,required" format:"uuid"`
+	// Function name
+	FunctionName string `json:"functionName,required"`
 	// Function status
 	FunctionStatus DeploymentResponseDeploymentFunctionStatus `json:"functionStatus,required"`
 	// Function version id
@@ -162,8 +167,10 @@ type DeploymentResponseDeployment struct {
 // deploymentResponseDeploymentJSON contains the JSON metadata for the struct
 // [DeploymentResponseDeployment]
 type deploymentResponseDeploymentJSON struct {
+	CreatedAt                apijson.Field
 	DeploymentSpecifications apijson.Field
 	FunctionID               apijson.Field
+	FunctionName             apijson.Field
 	FunctionStatus           apijson.Field
 	FunctionVersionID        apijson.Field
 	NcaID                    apijson.Field
@@ -191,14 +198,24 @@ type DeploymentResponseDeploymentDeploymentSpecification struct {
 	MaxInstances int64 `json:"maxInstances,required"`
 	// Minimum number of spot instances for the deployment
 	MinInstances int64 `json:"minInstances,required"`
+	// Specific attributes capabilities to deploy functions.
+	Attributes []string `json:"attributes"`
 	// List of availability-zones(or clusters) in the cluster group
 	AvailabilityZones []string `json:"availabilityZones"`
 	// Backend/CSP where the GPU powered instance will be launched
-	Backend       string      `json:"backend"`
+	Backend string `json:"backend"`
+	// Specific clusters within spot instance or worker node powered by the selected
+	// instance-type to deploy function.
+	Clusters      []string    `json:"clusters"`
 	Configuration interface{} `json:"configuration"`
 	// Max request concurrency between 1 (default) and 1024.
-	MaxRequestConcurrency int64                                                   `json:"maxRequestConcurrency"`
-	JSON                  deploymentResponseDeploymentDeploymentSpecificationJSON `json:"-"`
+	MaxRequestConcurrency int64 `json:"maxRequestConcurrency"`
+	// Preferred order of deployment if there are several gpu specs.
+	PreferredOrder int64 `json:"preferredOrder"`
+	// List of regions allowed to deploy. The instance or worker node will be in one of
+	// the specified geographical regions.
+	Regions []string                                                `json:"regions"`
+	JSON    deploymentResponseDeploymentDeploymentSpecificationJSON `json:"-"`
 }
 
 // deploymentResponseDeploymentDeploymentSpecificationJSON contains the JSON
@@ -208,10 +225,14 @@ type deploymentResponseDeploymentDeploymentSpecificationJSON struct {
 	InstanceType          apijson.Field
 	MaxInstances          apijson.Field
 	MinInstances          apijson.Field
+	Attributes            apijson.Field
 	AvailabilityZones     apijson.Field
 	Backend               apijson.Field
+	Clusters              apijson.Field
 	Configuration         apijson.Field
 	MaxRequestConcurrency apijson.Field
+	PreferredOrder        apijson.Field
+	Regions               apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -297,13 +318,23 @@ type FunctionDeploymentFunctionVersionNewParamsDeploymentSpecification struct {
 	MaxInstances param.Field[int64] `json:"maxInstances,required"`
 	// Minimum number of spot instances for the deployment
 	MinInstances param.Field[int64] `json:"minInstances,required"`
+	// Specific attributes capabilities to deploy functions.
+	Attributes param.Field[[]string] `json:"attributes"`
 	// List of availability-zones(or clusters) in the cluster group
 	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
 	// Backend/CSP where the GPU powered instance will be launched
-	Backend       param.Field[string]      `json:"backend"`
+	Backend param.Field[string] `json:"backend"`
+	// Specific clusters within spot instance or worker node powered by the selected
+	// instance-type to deploy function.
+	Clusters      param.Field[[]string]    `json:"clusters"`
 	Configuration param.Field[interface{}] `json:"configuration"`
 	// Max request concurrency between 1 (default) and 1024.
 	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
+	// Preferred order of deployment if there are several gpu specs.
+	PreferredOrder param.Field[int64] `json:"preferredOrder"`
+	// List of regions allowed to deploy. The instance or worker node will be in one of
+	// the specified geographical regions.
+	Regions param.Field[[]string] `json:"regions"`
 }
 
 func (r FunctionDeploymentFunctionVersionNewParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
@@ -329,13 +360,23 @@ type FunctionDeploymentFunctionVersionUpdateParamsDeploymentSpecification struct
 	MaxInstances param.Field[int64] `json:"maxInstances,required"`
 	// Minimum number of spot instances for the deployment
 	MinInstances param.Field[int64] `json:"minInstances,required"`
+	// Specific attributes capabilities to deploy functions.
+	Attributes param.Field[[]string] `json:"attributes"`
 	// List of availability-zones(or clusters) in the cluster group
 	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
 	// Backend/CSP where the GPU powered instance will be launched
-	Backend       param.Field[string]      `json:"backend"`
+	Backend param.Field[string] `json:"backend"`
+	// Specific clusters within spot instance or worker node powered by the selected
+	// instance-type to deploy function.
+	Clusters      param.Field[[]string]    `json:"clusters"`
 	Configuration param.Field[interface{}] `json:"configuration"`
 	// Max request concurrency between 1 (default) and 1024.
 	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
+	// Preferred order of deployment if there are several gpu specs.
+	PreferredOrder param.Field[int64] `json:"preferredOrder"`
+	// List of regions allowed to deploy. The instance or worker node will be in one of
+	// the specified geographical regions.
+	Regions param.Field[[]string] `json:"regions"`
 }
 
 func (r FunctionDeploymentFunctionVersionUpdateParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {

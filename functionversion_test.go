@@ -66,6 +66,10 @@ func TestFunctionVersionNewWithOptionalParams(t *testing.T) {
 				Version: nvcf.F("version"),
 				Uri:     nvcf.F("https://example.com"),
 			}}),
+			Secrets: nvcf.F([]nvcf.FunctionVersionNewParamsSecret{{
+				Name:  nvcf.F("x"),
+				Value: nvcf.F("x"),
+			}}),
 			Tags: nvcf.F([]string{"string"}),
 		},
 	)
