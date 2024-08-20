@@ -27,7 +27,6 @@ type Client struct {
 	QueueDetails               *QueueDetailService
 	Exec                       *ExecService
 	ClusterGroups              *ClusterGroupService
-	Clients                    *ClientService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -52,7 +51,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.QueueDetails = NewQueueDetailService(opts...)
 	r.Exec = NewExecService(opts...)
 	r.ClusterGroups = NewClusterGroupService(opts...)
-	r.Clients = NewClientService(opts...)
 
 	return
 }
