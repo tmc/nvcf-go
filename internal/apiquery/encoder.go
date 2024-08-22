@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/stainless-sdks/nvcf-go/internal/param"
+	"github.com/tmc/nvcf-go/internal/param"
 )
 
 var encoders sync.Map // map[reflect.Type]encoderFunc

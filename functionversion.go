@@ -9,10 +9,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
-	"github.com/stainless-sdks/nvcf-go/internal/param"
-	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/param"
+	"github.com/tmc/nvcf-go/internal/requestconfig"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // FunctionVersionService contains methods and other services that help with
