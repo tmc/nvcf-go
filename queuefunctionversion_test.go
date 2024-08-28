@@ -23,7 +23,6 @@ func TestQueueFunctionVersionList(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Queues.Functions.Versions.List(
 		context.TODO(),
