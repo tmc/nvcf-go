@@ -227,11 +227,3 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 func WithEnvironmentProduction() RequestOption {
 	return WithBaseURL("https://api.nvcf.nvidia.com/")
 }
-
-// WithBearerToken returns a RequestOption that sets the client setting "bearer_token".
-func WithBearerToken(value string) RequestOption {
-	return func(r *requestconfig.RequestConfig) error {
-		r.BearerToken = value
-		return nil
-	}
-}

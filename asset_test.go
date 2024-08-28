@@ -23,7 +23,6 @@ func TestAssetNew(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Assets.New(context.TODO(), nvcf.AssetNewParams{
 		ContentType: nvcf.F("contentType"),
@@ -48,7 +47,6 @@ func TestAssetGet(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Assets.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 	if err != nil {
@@ -70,7 +68,6 @@ func TestAssetList(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Assets.List(context.TODO())
 	if err != nil {
@@ -92,7 +89,6 @@ func TestAssetDelete(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	err := client.Assets.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 	if err != nil {

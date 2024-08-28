@@ -23,7 +23,6 @@ func TestFunctionDeploymentFunctionVersionDeleteDeploymentWithOptionalParams(t *
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.DeleteDeployment(
 		context.TODO(),
@@ -52,7 +51,6 @@ func TestFunctionDeploymentFunctionVersionInitiateDeployment(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.InitiateDeployment(
 		context.TODO(),
@@ -120,7 +118,6 @@ func TestFunctionDeploymentFunctionVersionGetDeployment(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.GetDeployment(
 		context.TODO(),
@@ -146,7 +143,6 @@ func TestFunctionDeploymentFunctionVersionUpdateDeployment(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.UpdateDeployment(
 		context.TODO(),

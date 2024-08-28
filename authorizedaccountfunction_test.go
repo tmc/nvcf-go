@@ -23,7 +23,6 @@ func TestAuthorizedAccountFunctionGet(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.AuthorizedAccounts.Functions.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 	if err != nil {
@@ -45,7 +44,6 @@ func TestAuthorizedAccountFunctionDelete(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.AuthorizedAccounts.Functions.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 	if err != nil {
@@ -67,7 +65,6 @@ func TestAuthorizedAccountFunctionAuthorize(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.AuthorizedAccounts.Functions.Authorize(
 		context.TODO(),
