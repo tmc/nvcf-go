@@ -3,7 +3,7 @@
 <a href="https://pkg.go.dev/github.com/stainless-sdks/nvcf-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/nvcf-go.svg" alt="Go Reference"></a>
 
 The Nvcf Go library provides convenient access to [the Nvcf REST
-API](https://www.nvidia.com/) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+API](https://docs.nvidia.com/cloud-functions/user-guide/latest/index.html) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
