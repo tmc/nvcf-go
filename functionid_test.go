@@ -23,7 +23,6 @@ func TestFunctionIDListWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.IDs.List(context.TODO(), nvcf.FunctionIDListParams{
 		Visibility: nvcf.F([]nvcf.FunctionIDListParamsVisibility{nvcf.FunctionIDListParamsVisibilityAuthorized}),

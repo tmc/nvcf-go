@@ -23,7 +23,6 @@ func TestEnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeWithOptionalPara
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.EnvelopeFunctionInvocation.Functions.Versions.InvokeEnvelope(
 		context.TODO(),
