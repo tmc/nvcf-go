@@ -23,6 +23,7 @@ func TestFunctionManagementFunctionVersionUpdateMetadataWithOptionalParams(t *te
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionManagement.Functions.Versions.UpdateMetadata(
 		context.TODO(),

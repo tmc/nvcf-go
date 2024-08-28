@@ -22,6 +22,7 @@ func TestUsage(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	createFunctionResponse, err := client.Functions.New(context.TODO(), nvcf.FunctionNewParams{
 		InferenceURL: nvcf.F("https://example.com"),

@@ -23,6 +23,7 @@ func TestAuthorizationFunctionAddWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Authorizations.Functions.Add(
 		context.TODO(),
@@ -53,6 +54,7 @@ func TestAuthorizationFunctionRemoveWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Authorizations.Functions.Remove(
 		context.TODO(),
