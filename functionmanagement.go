@@ -15,6 +15,7 @@ import (
 type FunctionManagementService struct {
 	Options   []option.RequestOption
 	Functions *FunctionManagementFunctionService
+	IDs       *FunctionManagementIDService
 }
 
 // NewFunctionManagementService generates a new service that applies the given
@@ -24,5 +25,6 @@ func NewFunctionManagementService(opts ...option.RequestOption) (r *FunctionMana
 	r = &FunctionManagementService{}
 	r.Options = opts
 	r.Functions = NewFunctionManagementFunctionService(opts...)
+	r.IDs = NewFunctionManagementIDService(opts...)
 	return
 }

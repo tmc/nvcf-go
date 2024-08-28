@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/nvcf-go/option"
 )
 
-func TestEnvelopeFunctionInvocationFunctionInvokeWithOptionalParams(t *testing.T) {
+func TestEnvelopeFunctionInvocationFunctionInvokeEnvelopeWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,15 +23,16 @@ func TestEnvelopeFunctionInvocationFunctionInvokeWithOptionalParams(t *testing.T
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.EnvelopeFunctionInvocation.Functions.Invoke(
+	_, err := client.EnvelopeFunctionInvocation.Functions.InvokeEnvelope(
 		context.TODO(),
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		nvcf.EnvelopeFunctionInvocationFunctionInvokeParams{
+		nvcf.EnvelopeFunctionInvocationFunctionInvokeEnvelopeParams{
 			RequestBody: nvcf.F[any](map[string]interface{}{}),
-			RequestHeader: nvcf.F(nvcf.EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeader{
+			RequestHeader: nvcf.F(nvcf.EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeader{
 				InputAssetReferences: nvcf.F([]string{"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"}),
-				MeteringData: nvcf.F([]nvcf.EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeaderMeteringData{{
+				MeteringData: nvcf.F([]nvcf.EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeaderMeteringData{{
 					Key:   nvcf.F("key"),
 					Value: nvcf.F("value"),
 				}, {

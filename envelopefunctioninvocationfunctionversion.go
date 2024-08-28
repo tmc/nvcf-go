@@ -50,7 +50,7 @@ func NewEnvelopeFunctionInvocationFunctionVersionService(opts ...option.RequestO
 // in order. If no in-progress response is received during polling you will receive
 // the most recent in-progress response. Only the first 256 unread in-progress
 // messages are kept.
-func (r *EnvelopeFunctionInvocationFunctionVersionService) Invoke(ctx context.Context, functionID string, versionID string, body EnvelopeFunctionInvocationFunctionVersionInvokeParams, opts ...option.RequestOption) (res *shared.InvokeFunctionResponse, err error) {
+func (r *EnvelopeFunctionInvocationFunctionVersionService) InvokeEnvelope(ctx context.Context, functionID string, versionID string, body EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParams, opts ...option.RequestOption) (res *shared.InvokeFunctionResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -65,41 +65,41 @@ func (r *EnvelopeFunctionInvocationFunctionVersionService) Invoke(ctx context.Co
 	return
 }
 
-type EnvelopeFunctionInvocationFunctionVersionInvokeParams struct {
+type EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParams struct {
 	RequestBody param.Field[interface{}] `json:"requestBody,required"`
 	// Data Transfer Object(DTO) representing header/address for Cloud Functions
 	// processing.
-	RequestHeader param.Field[EnvelopeFunctionInvocationFunctionVersionInvokeParamsRequestHeader] `json:"requestHeader"`
+	RequestHeader param.Field[EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParamsRequestHeader] `json:"requestHeader"`
 }
 
-func (r EnvelopeFunctionInvocationFunctionVersionInvokeParams) MarshalJSON() (data []byte, err error) {
+func (r EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // Data Transfer Object(DTO) representing header/address for Cloud Functions
 // processing.
-type EnvelopeFunctionInvocationFunctionVersionInvokeParamsRequestHeader struct {
+type EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParamsRequestHeader struct {
 	// List of UUIDs corresponding to the uploaded assets to be used as input for
 	// executing the task.
 	InputAssetReferences param.Field[[]string] `json:"inputAssetReferences" format:"uuid"`
 	// Metadata used for billing/metering purposes.
-	MeteringData param.Field[[]EnvelopeFunctionInvocationFunctionVersionInvokeParamsRequestHeaderMeteringData] `json:"meteringData"`
+	MeteringData param.Field[[]EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParamsRequestHeaderMeteringData] `json:"meteringData"`
 	// Polling timeout duration.
 	PollDurationSeconds param.Field[int64] `json:"pollDurationSeconds"`
 }
 
-func (r EnvelopeFunctionInvocationFunctionVersionInvokeParamsRequestHeader) MarshalJSON() (data []byte, err error) {
+func (r EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParamsRequestHeader) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // Data Transfer Object(DTO) representing a billing/metering data entry
-type EnvelopeFunctionInvocationFunctionVersionInvokeParamsRequestHeaderMeteringData struct {
+type EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParamsRequestHeaderMeteringData struct {
 	// Metering/Billing key
 	Key param.Field[string] `json:"key,required"`
 	// Metering/Billing value
 	Value param.Field[string] `json:"value,required"`
 }
 
-func (r EnvelopeFunctionInvocationFunctionVersionInvokeParamsRequestHeaderMeteringData) MarshalJSON() (data []byte, err error) {
+func (r EnvelopeFunctionInvocationFunctionVersionInvokeEnvelopeParamsRequestHeaderMeteringData) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

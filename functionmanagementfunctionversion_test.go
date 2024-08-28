@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/nvcf-go/option"
 )
 
-func TestFunctionManagementFunctionVersionGet(t *testing.T) {
+func TestFunctionManagementFunctionVersionUpdateMetadataWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,61 +23,16 @@ func TestFunctionManagementFunctionVersionGet(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.FunctionManagement.Functions.Versions.Get(
+	_, err := client.FunctionManagement.Functions.Versions.UpdateMetadata(
 		context.TODO(),
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
-	if err != nil {
-		var apierr *nvcf.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestFunctionManagementFunctionVersionUpdateWithOptionalParams(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := nvcf.NewClient(
-		option.WithBaseURL(baseURL),
-	)
-	_, err := client.FunctionManagement.Functions.Versions.Update(
-		context.TODO(),
-		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		nvcf.FunctionManagementFunctionVersionUpdateParams{
+		nvcf.FunctionManagementFunctionVersionUpdateMetadataParams{
 			Tags: nvcf.F([]string{"string"}),
 		},
 	)
-	if err != nil {
-		var apierr *nvcf.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestFunctionManagementFunctionVersionList(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := nvcf.NewClient(
-		option.WithBaseURL(baseURL),
-	)
-	_, err := client.FunctionManagement.Functions.Versions.List(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 	if err != nil {
 		var apierr *nvcf.Error
 		if errors.As(err, &apierr) {

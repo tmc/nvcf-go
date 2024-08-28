@@ -5,6 +5,7 @@ package nvcf
 import (
 	"context"
 	"net/http"
+	"os"
 
 	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
 	"github.com/stainless-sdks/nvcf-go/option"
@@ -15,41 +16,46 @@ import (
 // and instead use the [NewClient] method instead.
 type Client struct {
 	Options                    []option.RequestOption
+	UserSecretManagement       *UserSecretManagementService
 	FunctionManagement         *FunctionManagementService
 	FunctionDeployment         *FunctionDeploymentService
 	FunctionInvocation         *FunctionInvocationService
 	EnvelopeFunctionInvocation *EnvelopeFunctionInvocationService
 	Functions                  *FunctionService
-	Authorizations             *AuthorizationService
-	Assets                     *AssetService
-	AssetManagement            *AssetManagementService
 	AuthorizedAccounts         *AuthorizedAccountService
-	QueueDetails               *QueueDetailService
+	Assets                     *AssetService
+	Authorizations             *AuthorizationService
+	Queues                     *QueueService
+	Pexec                      *PexecService
 	Exec                       *ExecService
 	ClusterGroups              *ClusterGroupService
 	Clients                    *ClientService
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (). The option passed in as arguments are applied after these
-// default arguments, and all option will be passed down to the services and
-// requests that this client makes.
+// environment (NVCF_BEARER_TOKEN). The option passed in as arguments are applied
+// after these default arguments, and all option will be passed down to the
+// services and requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
+	if o, ok := os.LookupEnv("NVCF_BEARER_TOKEN"); ok {
+		defaults = append(defaults, option.WithBearerToken(o))
+	}
 	opts = append(defaults, opts...)
 
 	r = &Client{Options: opts}
 
+	r.UserSecretManagement = NewUserSecretManagementService(opts...)
 	r.FunctionManagement = NewFunctionManagementService(opts...)
 	r.FunctionDeployment = NewFunctionDeploymentService(opts...)
 	r.FunctionInvocation = NewFunctionInvocationService(opts...)
 	r.EnvelopeFunctionInvocation = NewEnvelopeFunctionInvocationService(opts...)
 	r.Functions = NewFunctionService(opts...)
-	r.Authorizations = NewAuthorizationService(opts...)
-	r.Assets = NewAssetService(opts...)
-	r.AssetManagement = NewAssetManagementService(opts...)
 	r.AuthorizedAccounts = NewAuthorizedAccountService(opts...)
-	r.QueueDetails = NewQueueDetailService(opts...)
+	r.Assets = NewAssetService(opts...)
+	r.Authorizations = NewAuthorizationService(opts...)
+	r.Queues = NewQueueService(opts...)
+	r.Pexec = NewPexecService(opts...)
 	r.Exec = NewExecService(opts...)
 	r.ClusterGroups = NewClusterGroupService(opts...)
 	r.Clients = NewClientService(opts...)

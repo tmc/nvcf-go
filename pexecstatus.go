@@ -14,21 +14,21 @@ import (
 	"github.com/stainless-sdks/nvcf-go/option"
 )
 
-// FunctionInvocationStatusService contains methods and other services that help
-// with interacting with the nvcf API.
+// PexecStatusService contains methods and other services that help with
+// interacting with the nvcf API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
-// the [NewFunctionInvocationStatusService] method instead.
-type FunctionInvocationStatusService struct {
+// the [NewPexecStatusService] method instead.
+type PexecStatusService struct {
 	Options []option.RequestOption
 }
 
-// NewFunctionInvocationStatusService generates a new service that applies the
-// given options to each request. These options are applied after the parent
-// client's options (if there is one), and before any request-specific options.
-func NewFunctionInvocationStatusService(opts ...option.RequestOption) (r *FunctionInvocationStatusService) {
-	r = &FunctionInvocationStatusService{}
+// NewPexecStatusService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewPexecStatusService(opts ...option.RequestOption) (r *PexecStatusService) {
+	r = &PexecStatusService{}
 	r.Options = opts
 	return
 }
@@ -42,7 +42,7 @@ func NewFunctionInvocationStatusService(opts ...option.RequestOption) (r *Functi
 // no in-progress response is received during polling you will receive the most
 // recent in-progress response. Only the first 256 unread in-progress messages are
 // kept.
-func (r *FunctionInvocationStatusService) Get(ctx context.Context, requestID string, query FunctionInvocationStatusGetParams, opts ...option.RequestOption) (res *FunctionInvocationStatusGetResponse, err error) {
+func (r *PexecStatusService) Get(ctx context.Context, requestID string, query PexecStatusGetParams, opts ...option.RequestOption) (res *PexecStatusGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if requestID == "" {
 		err = errors.New("missing required requestId parameter")
@@ -53,21 +53,21 @@ func (r *FunctionInvocationStatusService) Get(ctx context.Context, requestID str
 	return
 }
 
-type FunctionInvocationStatusGetResponse struct {
-	Char     string                                  `json:"char"`
-	Direct   bool                                    `json:"direct"`
-	Double   float64                                 `json:"double"`
-	Float    float64                                 `json:"float"`
-	Int      int64                                   `json:"int"`
-	Long     int64                                   `json:"long"`
-	ReadOnly bool                                    `json:"readOnly"`
-	Short    int64                                   `json:"short"`
-	JSON     functionInvocationStatusGetResponseJSON `json:"-"`
+type PexecStatusGetResponse struct {
+	Char     string                     `json:"char"`
+	Direct   bool                       `json:"direct"`
+	Double   float64                    `json:"double"`
+	Float    float64                    `json:"float"`
+	Int      int64                      `json:"int"`
+	Long     int64                      `json:"long"`
+	ReadOnly bool                       `json:"readOnly"`
+	Short    int64                      `json:"short"`
+	JSON     pexecStatusGetResponseJSON `json:"-"`
 }
 
-// functionInvocationStatusGetResponseJSON contains the JSON metadata for the
-// struct [FunctionInvocationStatusGetResponse]
-type functionInvocationStatusGetResponseJSON struct {
+// pexecStatusGetResponseJSON contains the JSON metadata for the struct
+// [PexecStatusGetResponse]
+type pexecStatusGetResponseJSON struct {
 	Char        apijson.Field
 	Direct      apijson.Field
 	Double      apijson.Field
@@ -80,14 +80,14 @@ type functionInvocationStatusGetResponseJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *FunctionInvocationStatusGetResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *PexecStatusGetResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r functionInvocationStatusGetResponseJSON) RawJSON() string {
+func (r pexecStatusGetResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type FunctionInvocationStatusGetParams struct {
+type PexecStatusGetParams struct {
 	NvcfPollSeconds param.Field[int64] `header:"NVCF-POLL-SECONDS"`
 }

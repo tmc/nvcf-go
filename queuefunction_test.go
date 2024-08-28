@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/nvcf-go/option"
 )
 
-func TestAssetManagementAssetNew(t *testing.T) {
+func TestQueueFunctionList(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,11 +23,9 @@ func TestAssetManagementAssetNew(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.AssetManagement.Assets.New(context.TODO(), nvcf.AssetManagementAssetNewParams{
-		ContentType: nvcf.F("contentType"),
-		Description: nvcf.F("description"),
-	})
+	_, err := client.Queues.Functions.List(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 	if err != nil {
 		var apierr *nvcf.Error
 		if errors.As(err, &apierr) {

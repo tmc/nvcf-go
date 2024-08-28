@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/nvcf-go/option"
 )
 
-func TestFunctionInvocationStatusGetWithOptionalParams(t *testing.T) {
+func TestUserSecretManagementFunctionVersionUpdateSecrets(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,12 +23,17 @@ func TestFunctionInvocationStatusGetWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.FunctionInvocation.Status.Get(
+	err := client.UserSecretManagement.Functions.Versions.UpdateSecrets(
 		context.TODO(),
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		nvcf.FunctionInvocationStatusGetParams{
-			NvcfPollSeconds: nvcf.F(int64(0)),
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		nvcf.UserSecretManagementFunctionVersionUpdateSecretsParams{
+			Secrets: nvcf.F([]nvcf.UserSecretManagementFunctionVersionUpdateSecretsParamsSecret{{
+				Name:  nvcf.F("x"),
+				Value: nvcf.F("x"),
+			}}),
 		},
 	)
 	if err != nil {

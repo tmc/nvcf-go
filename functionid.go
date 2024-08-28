@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
 	"github.com/stainless-sdks/nvcf-go/internal/apiquery"
 	"github.com/stainless-sdks/nvcf-go/internal/param"
 	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
@@ -41,29 +40,6 @@ func (r *FunctionIDService) List(ctx context.Context, query FunctionIDListParams
 	path := "v2/nvcf/functions/ids"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
-}
-
-// Response body containing list of function ids in an account
-type ListFunctionIDsResponse struct {
-	// List of function ids
-	FunctionIDs []string                    `json:"functionIds,required" format:"uuid"`
-	JSON        listFunctionIDsResponseJSON `json:"-"`
-}
-
-// listFunctionIDsResponseJSON contains the JSON metadata for the struct
-// [ListFunctionIDsResponse]
-type listFunctionIDsResponseJSON struct {
-	FunctionIDs apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListFunctionIDsResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listFunctionIDsResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type FunctionIDListParams struct {

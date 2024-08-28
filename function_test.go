@@ -23,6 +23,7 @@ func TestFunctionNewWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.New(context.TODO(), nvcf.FunctionNewParams{
 		InferenceURL:  nvcf.F("https://example.com"),
@@ -43,11 +44,11 @@ func TestFunctionNewWithOptionalParams(t *testing.T) {
 		Description:    nvcf.F("description"),
 		FunctionType:   nvcf.F(nvcf.FunctionNewParamsFunctionTypeDefault),
 		Health: nvcf.F(nvcf.FunctionNewParamsHealth{
-			Protocol:           nvcf.F(nvcf.FunctionNewParamsHealthProtocolHTTP),
-			Uri:                nvcf.F("https://example.com"),
-			Port:               nvcf.F(int64(0)),
-			Timeout:            nvcf.F("PT10S"),
 			ExpectedStatusCode: nvcf.F(int64(0)),
+			Port:               nvcf.F(int64(0)),
+			Protocol:           nvcf.F(nvcf.FunctionNewParamsHealthProtocolHTTP),
+			Timeout:            nvcf.F("PT10S"),
+			Uri:                nvcf.F("https://example.com"),
 		}),
 		HealthUri:            nvcf.F("https://example.com"),
 		HelmChart:            nvcf.F("https://example.com"),
@@ -55,13 +56,17 @@ func TestFunctionNewWithOptionalParams(t *testing.T) {
 		InferencePort:        nvcf.F(int64(0)),
 		Models: nvcf.F([]nvcf.FunctionNewParamsModel{{
 			Name:    nvcf.F("name"),
-			Version: nvcf.F("version"),
 			Uri:     nvcf.F("https://example.com"),
+			Version: nvcf.F("version"),
 		}}),
 		Resources: nvcf.F([]nvcf.FunctionNewParamsResource{{
 			Name:    nvcf.F("name"),
-			Version: nvcf.F("version"),
 			Uri:     nvcf.F("https://example.com"),
+			Version: nvcf.F("version"),
+		}}),
+		Secrets: nvcf.F([]nvcf.FunctionNewParamsSecret{{
+			Name:  nvcf.F("x"),
+			Value: nvcf.F("x"),
 		}}),
 		Tags: nvcf.F([]string{"string"}),
 	})
@@ -84,6 +89,7 @@ func TestFunctionListWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.List(context.TODO(), nvcf.FunctionListParams{
 		Visibility: nvcf.F([]nvcf.FunctionListParamsVisibility{nvcf.FunctionListParamsVisibilityAuthorized}),

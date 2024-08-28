@@ -6,25 +6,23 @@ import (
 	"github.com/stainless-sdks/nvcf-go/option"
 )
 
-// QueueDetailQueueService contains methods and other services that help with
+// UserSecretManagementService contains methods and other services that help with
 // interacting with the nvcf API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
-// the [NewQueueDetailQueueService] method instead.
-type QueueDetailQueueService struct {
+// the [NewUserSecretManagementService] method instead.
+type UserSecretManagementService struct {
 	Options   []option.RequestOption
-	Functions *QueueDetailQueueFunctionService
-	Position  *QueueDetailQueuePositionService
+	Functions *UserSecretManagementFunctionService
 }
 
-// NewQueueDetailQueueService generates a new service that applies the given
+// NewUserSecretManagementService generates a new service that applies the given
 // options to each request. These options are applied after the parent client's
 // options (if there is one), and before any request-specific options.
-func NewQueueDetailQueueService(opts ...option.RequestOption) (r *QueueDetailQueueService) {
-	r = &QueueDetailQueueService{}
+func NewUserSecretManagementService(opts ...option.RequestOption) (r *UserSecretManagementService) {
+	r = &UserSecretManagementService{}
 	r.Options = opts
-	r.Functions = NewQueueDetailQueueFunctionService(opts...)
-	r.Position = NewQueueDetailQueuePositionService(opts...)
+	r.Functions = NewUserSecretManagementFunctionService(opts...)
 	return
 }

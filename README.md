@@ -37,10 +37,13 @@ import (
 	"fmt"
 
 	"github.com/stainless-sdks/nvcf-go"
+	"github.com/stainless-sdks/nvcf-go/option"
 )
 
 func main() {
-	client := nvcf.NewClient()
+	client := nvcf.NewClient(
+		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("NVCF_BEARER_TOKEN")
+	)
 	createFunctionResponse, err := client.Functions.New(context.TODO(), nvcf.FunctionNewParams{
 		InferenceURL: nvcf.F("https://example.com"),
 		Name:         nvcf.F("x"),
