@@ -3,7 +3,7 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // FunctionManagementService contains methods and other services that help with
@@ -15,6 +15,7 @@ import (
 type FunctionManagementService struct {
 	Options   []option.RequestOption
 	Functions *FunctionManagementFunctionService
+	IDs       *FunctionManagementIDService
 }
 
 // NewFunctionManagementService generates a new service that applies the given
@@ -24,5 +25,6 @@ func NewFunctionManagementService(opts ...option.RequestOption) (r *FunctionMana
 	r = &FunctionManagementService{}
 	r.Options = opts
 	r.Functions = NewFunctionManagementFunctionService(opts...)
+	r.IDs = NewFunctionManagementIDService(opts...)
 	return
 }

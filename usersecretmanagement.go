@@ -6,23 +6,23 @@ import (
 	"github.com/tmc/nvcf-go/option"
 )
 
-// AuthorizedAccountService contains methods and other services that help with
+// UserSecretManagementService contains methods and other services that help with
 // interacting with the nvcf API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
-// the [NewAuthorizedAccountService] method instead.
-type AuthorizedAccountService struct {
+// the [NewUserSecretManagementService] method instead.
+type UserSecretManagementService struct {
 	Options   []option.RequestOption
-	Functions *AuthorizedAccountFunctionService
+	Functions *UserSecretManagementFunctionService
 }
 
-// NewAuthorizedAccountService generates a new service that applies the given
+// NewUserSecretManagementService generates a new service that applies the given
 // options to each request. These options are applied after the parent client's
 // options (if there is one), and before any request-specific options.
-func NewAuthorizedAccountService(opts ...option.RequestOption) (r *AuthorizedAccountService) {
-	r = &AuthorizedAccountService{}
+func NewUserSecretManagementService(opts ...option.RequestOption) (r *UserSecretManagementService) {
+	r = &UserSecretManagementService{}
 	r.Options = opts
-	r.Functions = NewAuthorizedAccountFunctionService(opts...)
+	r.Functions = NewUserSecretManagementFunctionService(opts...)
 	return
 }

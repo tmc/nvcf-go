@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal/testutil"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal/testutil"
+	"github.com/tmc/nvcf-go/option"
 )
 
-func TestAssetManagementAssetNew(t *testing.T) {
+func TestPexecStatusGetWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,11 +23,15 @@ func TestAssetManagementAssetNew(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.AssetManagement.Assets.New(context.TODO(), nvcf.AssetManagementAssetNewParams{
-		ContentType: nvcf.F("contentType"),
-		Description: nvcf.F("description"),
-	})
+	_, err := client.Pexec.Status.Get(
+		context.TODO(),
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		nvcf.PexecStatusGetParams{
+			NvcfPollSeconds: nvcf.F(int64(0)),
+		},
+	)
 	if err != nil {
 		var apierr *nvcf.Error
 		if errors.As(err, &apierr) {

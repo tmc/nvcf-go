@@ -3,7 +3,7 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // FunctionInvocationService contains methods and other services that help with
@@ -15,7 +15,6 @@ import (
 type FunctionInvocationService struct {
 	Options   []option.RequestOption
 	Functions *FunctionInvocationFunctionService
-	Status    *FunctionInvocationStatusService
 }
 
 // NewFunctionInvocationService generates a new service that applies the given
@@ -25,6 +24,5 @@ func NewFunctionInvocationService(opts ...option.RequestOption) (r *FunctionInvo
 	r = &FunctionInvocationService{}
 	r.Options = opts
 	r.Functions = NewFunctionInvocationFunctionService(opts...)
-	r.Status = NewFunctionInvocationStatusService(opts...)
 	return
 }

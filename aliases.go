@@ -3,8 +3,8 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/internal/apierror"
-	"github.com/stainless-sdks/nvcf-go/shared"
+	"github.com/tmc/nvcf-go/internal/apierror"
+	"github.com/tmc/nvcf-go/shared"
 )
 
 type Error = apierror.Error
@@ -128,6 +128,36 @@ type FunctionResponseFunctionModel = shared.FunctionResponseFunctionModel
 //
 // This is an alias to an internal type.
 type FunctionResponseFunctionResource = shared.FunctionResponseFunctionResource
+
+// Request queue details of all the functions with same id in an account
+//
+// This is an alias to an internal type.
+type GetQueuesResponse = shared.GetQueuesResponse
+
+// Data Transfer Object(DTO) representing a request queue for function version
+//
+// This is an alias to an internal type.
+type GetQueuesResponseQueue = shared.GetQueuesResponseQueue
+
+// Function status
+//
+// This is an alias to an internal type.
+type GetQueuesResponseQueuesFunctionStatus = shared.GetQueuesResponseQueuesFunctionStatus
+
+// This is an alias to an internal value.
+const GetQueuesResponseQueuesFunctionStatusActive = shared.GetQueuesResponseQueuesFunctionStatusActive
+
+// This is an alias to an internal value.
+const GetQueuesResponseQueuesFunctionStatusDeploying = shared.GetQueuesResponseQueuesFunctionStatusDeploying
+
+// This is an alias to an internal value.
+const GetQueuesResponseQueuesFunctionStatusError = shared.GetQueuesResponseQueuesFunctionStatusError
+
+// This is an alias to an internal value.
+const GetQueuesResponseQueuesFunctionStatusInactive = shared.GetQueuesResponseQueuesFunctionStatusInactive
+
+// This is an alias to an internal value.
+const GetQueuesResponseQueuesFunctionStatusDeleted = shared.GetQueuesResponseQueuesFunctionStatusDeleted
 
 // Response body with result from a request for executing a job/task as a cloud
 // function using a GPU powered spot/on-demand instance.

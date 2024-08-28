@@ -8,9 +8,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
-	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/param"
+	"github.com/tmc/nvcf-go/internal/requestconfig"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // AssetService contains methods and other services that help with interacting with
@@ -29,6 +30,17 @@ type AssetService struct {
 func NewAssetService(opts ...option.RequestOption) (r *AssetService) {
 	r = &AssetService{}
 	r.Options = opts
+	return
+}
+
+// Creates a unique id representing an asset and a pre-signed URL to upload the
+// asset artifact to AWS S3 bucket for the NVIDIA Cloud Account. Requires either a
+// bearer token or an api-key with 'invoke_function' scope in the HTTP
+// Authorization header.
+func (r *AssetService) New(ctx context.Context, body AssetNewParams, opts ...option.RequestOption) (res *CreateAssetResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "v2/nvcf/assets"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -120,6 +132,39 @@ func (r assetResponseAssetJSON) RawJSON() string {
 	return r.raw
 }
 
+// Response body containing asset-id and the corresponding pre-signed URL to upload
+// an asset of specified content-type to AWS S3 bucket.
+type CreateAssetResponse struct {
+	// Unique id of the asset to be uploaded to AWS S3 bucket
+	AssetID string `json:"assetId" format:"uuid"`
+	// Content type of the asset such image/png, image/jpeg, etc.
+	ContentType string `json:"contentType"`
+	// Asset description to be used when uploading the asset
+	Description string `json:"description"`
+	// Pre-signed upload URL to upload asset
+	UploadURL string                  `json:"uploadUrl" format:"url"`
+	JSON      createAssetResponseJSON `json:"-"`
+}
+
+// createAssetResponseJSON contains the JSON metadata for the struct
+// [CreateAssetResponse]
+type createAssetResponseJSON struct {
+	AssetID     apijson.Field
+	ContentType apijson.Field
+	Description apijson.Field
+	UploadURL   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CreateAssetResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r createAssetResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 // Response body containing list of assets of the current nca id
 type ListAssetsResponse struct {
 	// List of assets uploaded for the nca id
@@ -170,4 +215,15 @@ func (r *ListAssetsResponseAsset) UnmarshalJSON(data []byte) (err error) {
 
 func (r listAssetsResponseAssetJSON) RawJSON() string {
 	return r.raw
+}
+
+type AssetNewParams struct {
+	// Content type of the asset such image/png, image/jpeg, etc.
+	ContentType param.Field[string] `json:"contentType,required"`
+	// Asset description
+	Description param.Field[string] `json:"description,required"`
+}
+
+func (r AssetNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
