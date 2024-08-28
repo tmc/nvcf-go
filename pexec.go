@@ -6,23 +6,23 @@ import (
 	"github.com/tmc/nvcf-go/option"
 )
 
-// ExecService contains methods and other services that help with interacting with
+// PexecService contains methods and other services that help with interacting with
 // the nvcf API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
-// the [NewExecService] method instead.
-type ExecService struct {
+// the [NewPexecService] method instead.
+type PexecService struct {
 	Options []option.RequestOption
-	Status  *ExecStatusService
+	Status  *PexecStatusService
 }
 
-// NewExecService generates a new service that applies the given options to each
+// NewPexecService generates a new service that applies the given options to each
 // request. These options are applied after the parent client's options (if there
 // is one), and before any request-specific options.
-func NewExecService(opts ...option.RequestOption) (r *ExecService) {
-	r = &ExecService{}
+func NewPexecService(opts ...option.RequestOption) (r *PexecService) {
+	r = &PexecService{}
 	r.Options = opts
-	r.Status = NewExecStatusService(opts...)
+	r.Status = NewPexecStatusService(opts...)
 	return
 }

@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal"
+	"github.com/tmc/nvcf-go/option"
 )
 
 type closureTransport struct {

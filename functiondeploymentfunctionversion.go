@@ -10,12 +10,12 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
-	"github.com/stainless-sdks/nvcf-go/internal/apiquery"
-	"github.com/stainless-sdks/nvcf-go/internal/param"
-	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
-	"github.com/stainless-sdks/nvcf-go/option"
-	"github.com/stainless-sdks/nvcf-go/shared"
+	"github.com/tmc/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/apiquery"
+	"github.com/tmc/nvcf-go/internal/param"
+	"github.com/tmc/nvcf-go/internal/requestconfig"
+	"github.com/tmc/nvcf-go/option"
+	"github.com/tmc/nvcf-go/shared"
 )
 
 // FunctionDeploymentFunctionVersionService contains methods and other services
@@ -37,12 +37,34 @@ func NewFunctionDeploymentFunctionVersionService(opts ...option.RequestOption) (
 	return
 }
 
+// Deletes the deployment associated with the specified function. Upon deletion,
+// any active instances will be terminated, and the function's status will
+// transition to 'INACTIVE'. To undeploy a function version gracefully, specify
+// 'graceful=true' query parameter, allowing current tasks to complete before
+// terminating the instances. If the specified function version is public, then
+// Account Admin cannot perform this operation. Access to this endpoint mandates a
+// bearer token with 'deploy_function' scope in the HTTP Authorization header.
+func (r *FunctionDeploymentFunctionVersionService) DeleteDeployment(ctx context.Context, functionID string, functionVersionID string, body FunctionDeploymentFunctionVersionDeleteDeploymentParams, opts ...option.RequestOption) (res *shared.FunctionResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	if functionID == "" {
+		err = errors.New("missing required functionId parameter")
+		return
+	}
+	if functionVersionID == "" {
+		err = errors.New("missing required functionVersionId parameter")
+		return
+	}
+	path := fmt.Sprintf("v2/nvcf/deployments/functions/%s/versions/%s", functionID, functionVersionID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
+	return
+}
+
 // Initiates deployment for the specified function version. Upon invocation of this
 // endpoint, the function's status transitions to 'DEPLOYING'. If the specified
 // function version is public, then Account Admin cannot perform this operation.
 // Access to this endpoint mandates a bearer token with 'deploy_function' scope in
 // the HTTP Authorization header.
-func (r *FunctionDeploymentFunctionVersionService) New(ctx context.Context, functionID string, functionVersionID string, body FunctionDeploymentFunctionVersionNewParams, opts ...option.RequestOption) (res *DeploymentResponse, err error) {
+func (r *FunctionDeploymentFunctionVersionService) InitiateDeployment(ctx context.Context, functionID string, functionVersionID string, body FunctionDeploymentFunctionVersionInitiateDeploymentParams, opts ...option.RequestOption) (res *DeploymentResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -60,7 +82,7 @@ func (r *FunctionDeploymentFunctionVersionService) New(ctx context.Context, func
 // Allows Account Admins to retrieve the deployment details of the specified
 // function version. Access to this endpoint mandates a bearer token with
 // 'deploy_function' scope in the HTTP Authorization header.
-func (r *FunctionDeploymentFunctionVersionService) Get(ctx context.Context, functionID string, functionVersionID string, opts ...option.RequestOption) (res *DeploymentResponse, err error) {
+func (r *FunctionDeploymentFunctionVersionService) GetDeployment(ctx context.Context, functionID string, functionVersionID string, opts ...option.RequestOption) (res *DeploymentResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -80,7 +102,7 @@ func (r *FunctionDeploymentFunctionVersionService) Get(ctx context.Context, func
 // endpoint. If the specified function is public, then Account Admin cannot perform
 // this operation. Access to this endpoint mandates a bearer token with
 // 'deploy_function' scope in the HTTP Authorization header.
-func (r *FunctionDeploymentFunctionVersionService) Update(ctx context.Context, functionID string, functionVersionID string, body FunctionDeploymentFunctionVersionUpdateParams, opts ...option.RequestOption) (res *DeploymentResponse, err error) {
+func (r *FunctionDeploymentFunctionVersionService) UpdateDeployment(ctx context.Context, functionID string, functionVersionID string, body FunctionDeploymentFunctionVersionUpdateDeploymentParams, opts ...option.RequestOption) (res *DeploymentResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -92,28 +114,6 @@ func (r *FunctionDeploymentFunctionVersionService) Update(ctx context.Context, f
 	}
 	path := fmt.Sprintf("v2/nvcf/deployments/functions/%s/versions/%s", functionID, functionVersionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
-}
-
-// Deletes the deployment associated with the specified function. Upon deletion,
-// any active instances will be terminated, and the function's status will
-// transition to 'INACTIVE'. To undeploy a function version gracefully, specify
-// 'graceful=true' query parameter, allowing current tasks to complete before
-// terminating the instances. If the specified function version is public, then
-// Account Admin cannot perform this operation. Access to this endpoint mandates a
-// bearer token with 'deploy_function' scope in the HTTP Authorization header.
-func (r *FunctionDeploymentFunctionVersionService) Delete(ctx context.Context, functionID string, functionVersionID string, body FunctionDeploymentFunctionVersionDeleteParams, opts ...option.RequestOption) (res *shared.FunctionResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	if functionID == "" {
-		err = errors.New("missing required functionId parameter")
-		return
-	}
-	if functionVersionID == "" {
-		err = errors.New("missing required functionVersionId parameter")
-		return
-	}
-	path := fmt.Sprintf("v2/nvcf/deployments/functions/%s/versions/%s", functionID, functionVersionID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
 	return
 }
 
@@ -299,100 +299,100 @@ func (r deploymentResponseDeploymentHealthInfoJSON) RawJSON() string {
 	return r.raw
 }
 
-type FunctionDeploymentFunctionVersionNewParams struct {
-	// Deployment specs with Backend, GPU, instance-type, etc. details
-	DeploymentSpecifications param.Field[[]FunctionDeploymentFunctionVersionNewParamsDeploymentSpecification] `json:"deploymentSpecifications,required"`
-}
-
-func (r FunctionDeploymentFunctionVersionNewParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Data Transfer Object(DTO) representing GPU specification.
-type FunctionDeploymentFunctionVersionNewParamsDeploymentSpecification struct {
-	// GPU name from the cluster
-	GPU param.Field[string] `json:"gpu,required"`
-	// Instance type, based on GPU, assigned to a Worker
-	InstanceType param.Field[string] `json:"instanceType,required"`
-	// Maximum number of spot instances for the deployment
-	MaxInstances param.Field[int64] `json:"maxInstances,required"`
-	// Minimum number of spot instances for the deployment
-	MinInstances param.Field[int64] `json:"minInstances,required"`
-	// Specific attributes capabilities to deploy functions.
-	Attributes param.Field[[]string] `json:"attributes"`
-	// List of availability-zones(or clusters) in the cluster group
-	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
-	// Backend/CSP where the GPU powered instance will be launched
-	Backend param.Field[string] `json:"backend"`
-	// Specific clusters within spot instance or worker node powered by the selected
-	// instance-type to deploy function.
-	Clusters      param.Field[[]string]    `json:"clusters"`
-	Configuration param.Field[interface{}] `json:"configuration"`
-	// Max request concurrency between 1 (default) and 1024.
-	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
-	// Preferred order of deployment if there are several gpu specs.
-	PreferredOrder param.Field[int64] `json:"preferredOrder"`
-	// List of regions allowed to deploy. The instance or worker node will be in one of
-	// the specified geographical regions.
-	Regions param.Field[[]string] `json:"regions"`
-}
-
-func (r FunctionDeploymentFunctionVersionNewParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type FunctionDeploymentFunctionVersionUpdateParams struct {
-	// Deployment specs with Backend, GPU, instance-type, etc. details
-	DeploymentSpecifications param.Field[[]FunctionDeploymentFunctionVersionUpdateParamsDeploymentSpecification] `json:"deploymentSpecifications,required"`
-}
-
-func (r FunctionDeploymentFunctionVersionUpdateParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Data Transfer Object(DTO) representing GPU specification.
-type FunctionDeploymentFunctionVersionUpdateParamsDeploymentSpecification struct {
-	// GPU name from the cluster
-	GPU param.Field[string] `json:"gpu,required"`
-	// Instance type, based on GPU, assigned to a Worker
-	InstanceType param.Field[string] `json:"instanceType,required"`
-	// Maximum number of spot instances for the deployment
-	MaxInstances param.Field[int64] `json:"maxInstances,required"`
-	// Minimum number of spot instances for the deployment
-	MinInstances param.Field[int64] `json:"minInstances,required"`
-	// Specific attributes capabilities to deploy functions.
-	Attributes param.Field[[]string] `json:"attributes"`
-	// List of availability-zones(or clusters) in the cluster group
-	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
-	// Backend/CSP where the GPU powered instance will be launched
-	Backend param.Field[string] `json:"backend"`
-	// Specific clusters within spot instance or worker node powered by the selected
-	// instance-type to deploy function.
-	Clusters      param.Field[[]string]    `json:"clusters"`
-	Configuration param.Field[interface{}] `json:"configuration"`
-	// Max request concurrency between 1 (default) and 1024.
-	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
-	// Preferred order of deployment if there are several gpu specs.
-	PreferredOrder param.Field[int64] `json:"preferredOrder"`
-	// List of regions allowed to deploy. The instance or worker node will be in one of
-	// the specified geographical regions.
-	Regions param.Field[[]string] `json:"regions"`
-}
-
-func (r FunctionDeploymentFunctionVersionUpdateParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type FunctionDeploymentFunctionVersionDeleteParams struct {
+type FunctionDeploymentFunctionVersionDeleteDeploymentParams struct {
 	// Query param to deactivate function for graceful shutdown
 	Graceful param.Field[bool] `query:"graceful"`
 }
 
-// URLQuery serializes [FunctionDeploymentFunctionVersionDeleteParams]'s query
-// parameters as `url.Values`.
-func (r FunctionDeploymentFunctionVersionDeleteParams) URLQuery() (v url.Values) {
+// URLQuery serializes [FunctionDeploymentFunctionVersionDeleteDeploymentParams]'s
+// query parameters as `url.Values`.
+func (r FunctionDeploymentFunctionVersionDeleteDeploymentParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
+}
+
+type FunctionDeploymentFunctionVersionInitiateDeploymentParams struct {
+	// Deployment specs with Backend, GPU, instance-type, etc. details
+	DeploymentSpecifications param.Field[[]FunctionDeploymentFunctionVersionInitiateDeploymentParamsDeploymentSpecification] `json:"deploymentSpecifications,required"`
+}
+
+func (r FunctionDeploymentFunctionVersionInitiateDeploymentParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Data Transfer Object(DTO) representing GPU specification.
+type FunctionDeploymentFunctionVersionInitiateDeploymentParamsDeploymentSpecification struct {
+	// GPU name from the cluster
+	GPU param.Field[string] `json:"gpu,required"`
+	// Instance type, based on GPU, assigned to a Worker
+	InstanceType param.Field[string] `json:"instanceType,required"`
+	// Maximum number of spot instances for the deployment
+	MaxInstances param.Field[int64] `json:"maxInstances,required"`
+	// Minimum number of spot instances for the deployment
+	MinInstances param.Field[int64] `json:"minInstances,required"`
+	// Specific attributes capabilities to deploy functions.
+	Attributes param.Field[[]string] `json:"attributes"`
+	// List of availability-zones(or clusters) in the cluster group
+	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
+	// Backend/CSP where the GPU powered instance will be launched
+	Backend param.Field[string] `json:"backend"`
+	// Specific clusters within spot instance or worker node powered by the selected
+	// instance-type to deploy function.
+	Clusters      param.Field[[]string]    `json:"clusters"`
+	Configuration param.Field[interface{}] `json:"configuration"`
+	// Max request concurrency between 1 (default) and 1024.
+	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
+	// Preferred order of deployment if there are several gpu specs.
+	PreferredOrder param.Field[int64] `json:"preferredOrder"`
+	// List of regions allowed to deploy. The instance or worker node will be in one of
+	// the specified geographical regions.
+	Regions param.Field[[]string] `json:"regions"`
+}
+
+func (r FunctionDeploymentFunctionVersionInitiateDeploymentParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type FunctionDeploymentFunctionVersionUpdateDeploymentParams struct {
+	// Deployment specs with Backend, GPU, instance-type, etc. details
+	DeploymentSpecifications param.Field[[]FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecification] `json:"deploymentSpecifications,required"`
+}
+
+func (r FunctionDeploymentFunctionVersionUpdateDeploymentParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Data Transfer Object(DTO) representing GPU specification.
+type FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecification struct {
+	// GPU name from the cluster
+	GPU param.Field[string] `json:"gpu,required"`
+	// Instance type, based on GPU, assigned to a Worker
+	InstanceType param.Field[string] `json:"instanceType,required"`
+	// Maximum number of spot instances for the deployment
+	MaxInstances param.Field[int64] `json:"maxInstances,required"`
+	// Minimum number of spot instances for the deployment
+	MinInstances param.Field[int64] `json:"minInstances,required"`
+	// Specific attributes capabilities to deploy functions.
+	Attributes param.Field[[]string] `json:"attributes"`
+	// List of availability-zones(or clusters) in the cluster group
+	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
+	// Backend/CSP where the GPU powered instance will be launched
+	Backend param.Field[string] `json:"backend"`
+	// Specific clusters within spot instance or worker node powered by the selected
+	// instance-type to deploy function.
+	Clusters      param.Field[[]string]    `json:"clusters"`
+	Configuration param.Field[interface{}] `json:"configuration"`
+	// Max request concurrency between 1 (default) and 1024.
+	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
+	// Preferred order of deployment if there are several gpu specs.
+	PreferredOrder param.Field[int64] `json:"preferredOrder"`
+	// List of regions allowed to deploy. The instance or worker node will be in one of
+	// the specified geographical regions.
+	Regions param.Field[[]string] `json:"regions"`
+}
+
+func (r FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }

@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/nvcf-go
+module github.com/tmc/nvcf-go
 
 go 1.21
 

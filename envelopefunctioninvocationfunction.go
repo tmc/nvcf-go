@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
-	"github.com/stainless-sdks/nvcf-go/internal/param"
-	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
-	"github.com/stainless-sdks/nvcf-go/option"
-	"github.com/stainless-sdks/nvcf-go/shared"
+	"github.com/tmc/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/param"
+	"github.com/tmc/nvcf-go/internal/requestconfig"
+	"github.com/tmc/nvcf-go/option"
+	"github.com/tmc/nvcf-go/shared"
 )
 
 // EnvelopeFunctionInvocationFunctionService contains methods and other services
@@ -52,7 +52,7 @@ func NewEnvelopeFunctionInvocationFunctionService(opts ...option.RequestOption) 
 // in order. If no in-progress response is received during polling you will receive
 // the most recent in-progress response. Only the first 256 unread in-progress
 // messages are kept.
-func (r *EnvelopeFunctionInvocationFunctionService) Invoke(ctx context.Context, functionID string, body EnvelopeFunctionInvocationFunctionInvokeParams, opts ...option.RequestOption) (res *shared.InvokeFunctionResponse, err error) {
+func (r *EnvelopeFunctionInvocationFunctionService) InvokeEnvelope(ctx context.Context, functionID string, body EnvelopeFunctionInvocationFunctionInvokeEnvelopeParams, opts ...option.RequestOption) (res *shared.InvokeFunctionResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -63,41 +63,41 @@ func (r *EnvelopeFunctionInvocationFunctionService) Invoke(ctx context.Context, 
 	return
 }
 
-type EnvelopeFunctionInvocationFunctionInvokeParams struct {
+type EnvelopeFunctionInvocationFunctionInvokeEnvelopeParams struct {
 	RequestBody param.Field[interface{}] `json:"requestBody,required"`
 	// Data Transfer Object(DTO) representing header/address for Cloud Functions
 	// processing.
-	RequestHeader param.Field[EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeader] `json:"requestHeader"`
+	RequestHeader param.Field[EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeader] `json:"requestHeader"`
 }
 
-func (r EnvelopeFunctionInvocationFunctionInvokeParams) MarshalJSON() (data []byte, err error) {
+func (r EnvelopeFunctionInvocationFunctionInvokeEnvelopeParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // Data Transfer Object(DTO) representing header/address for Cloud Functions
 // processing.
-type EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeader struct {
+type EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeader struct {
 	// List of UUIDs corresponding to the uploaded assets to be used as input for
 	// executing the task.
 	InputAssetReferences param.Field[[]string] `json:"inputAssetReferences" format:"uuid"`
 	// Metadata used for billing/metering purposes.
-	MeteringData param.Field[[]EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeaderMeteringData] `json:"meteringData"`
+	MeteringData param.Field[[]EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeaderMeteringData] `json:"meteringData"`
 	// Polling timeout duration.
 	PollDurationSeconds param.Field[int64] `json:"pollDurationSeconds"`
 }
 
-func (r EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeader) MarshalJSON() (data []byte, err error) {
+func (r EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeader) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // Data Transfer Object(DTO) representing a billing/metering data entry
-type EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeaderMeteringData struct {
+type EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeaderMeteringData struct {
 	// Metering/Billing key
 	Key param.Field[string] `json:"key,required"`
 	// Metering/Billing value
 	Value param.Field[string] `json:"value,required"`
 }
 
-func (r EnvelopeFunctionInvocationFunctionInvokeParamsRequestHeaderMeteringData) MarshalJSON() (data []byte, err error) {
+func (r EnvelopeFunctionInvocationFunctionInvokeEnvelopeParamsRequestHeaderMeteringData) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

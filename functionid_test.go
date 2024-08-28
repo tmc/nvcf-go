@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal/testutil"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal/testutil"
+	"github.com/tmc/nvcf-go/option"
 )
 
 func TestFunctionIDListWithOptionalParams(t *testing.T) {
@@ -23,6 +23,7 @@ func TestFunctionIDListWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.IDs.List(context.TODO(), nvcf.FunctionIDListParams{
 		Visibility: nvcf.F([]nvcf.FunctionIDListParamsVisibility{nvcf.FunctionIDListParamsVisibilityAuthorized}),

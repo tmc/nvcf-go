@@ -5,7 +5,7 @@ package shared
 import (
 	"time"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/apijson"
 )
 
 // Parties authorized to invoke function
@@ -468,6 +468,83 @@ func (r *FunctionResponseFunctionResource) UnmarshalJSON(data []byte) (err error
 
 func (r functionResponseFunctionResourceJSON) RawJSON() string {
 	return r.raw
+}
+
+// Request queue details of all the functions with same id in an account
+type GetQueuesResponse struct {
+	// Function id
+	FunctionID string `json:"functionId,required" format:"uuid"`
+	// Details of all the queues associated with same named functions
+	Queues []GetQueuesResponseQueue `json:"queues,required"`
+	JSON   getQueuesResponseJSON    `json:"-"`
+}
+
+// getQueuesResponseJSON contains the JSON metadata for the struct
+// [GetQueuesResponse]
+type getQueuesResponseJSON struct {
+	FunctionID  apijson.Field
+	Queues      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *GetQueuesResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r getQueuesResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+// Data Transfer Object(DTO) representing a request queue for function version
+type GetQueuesResponseQueue struct {
+	// Function name
+	FunctionName string `json:"functionName,required"`
+	// Function status
+	FunctionStatus GetQueuesResponseQueuesFunctionStatus `json:"functionStatus,required"`
+	// Function version id
+	FunctionVersionID string `json:"functionVersionId,required" format:"uuid"`
+	// Approximate number of messages in the request queue
+	QueueDepth int64                      `json:"queueDepth"`
+	JSON       getQueuesResponseQueueJSON `json:"-"`
+}
+
+// getQueuesResponseQueueJSON contains the JSON metadata for the struct
+// [GetQueuesResponseQueue]
+type getQueuesResponseQueueJSON struct {
+	FunctionName      apijson.Field
+	FunctionStatus    apijson.Field
+	FunctionVersionID apijson.Field
+	QueueDepth        apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *GetQueuesResponseQueue) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r getQueuesResponseQueueJSON) RawJSON() string {
+	return r.raw
+}
+
+// Function status
+type GetQueuesResponseQueuesFunctionStatus string
+
+const (
+	GetQueuesResponseQueuesFunctionStatusActive    GetQueuesResponseQueuesFunctionStatus = "ACTIVE"
+	GetQueuesResponseQueuesFunctionStatusDeploying GetQueuesResponseQueuesFunctionStatus = "DEPLOYING"
+	GetQueuesResponseQueuesFunctionStatusError     GetQueuesResponseQueuesFunctionStatus = "ERROR"
+	GetQueuesResponseQueuesFunctionStatusInactive  GetQueuesResponseQueuesFunctionStatus = "INACTIVE"
+	GetQueuesResponseQueuesFunctionStatusDeleted   GetQueuesResponseQueuesFunctionStatus = "DELETED"
+)
+
+func (r GetQueuesResponseQueuesFunctionStatus) IsKnown() bool {
+	switch r {
+	case GetQueuesResponseQueuesFunctionStatusActive, GetQueuesResponseQueuesFunctionStatusDeploying, GetQueuesResponseQueuesFunctionStatusError, GetQueuesResponseQueuesFunctionStatusInactive, GetQueuesResponseQueuesFunctionStatusDeleted:
+		return true
+	}
+	return false
 }
 
 // Response body with result from a request for executing a job/task as a cloud

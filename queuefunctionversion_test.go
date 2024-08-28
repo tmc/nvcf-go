@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal/testutil"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal/testutil"
+	"github.com/tmc/nvcf-go/option"
 )
 
-func TestQueueDetailQueueFunctionList(t *testing.T) {
+func TestQueueFunctionVersionList(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,8 +23,13 @@ func TestQueueDetailQueueFunctionList(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.QueueDetails.Queues.Functions.List(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+	_, err := client.Queues.Functions.Versions.List(
+		context.TODO(),
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+	)
 	if err != nil {
 		var apierr *nvcf.Error
 		if errors.As(err, &apierr) {

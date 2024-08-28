@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal/testutil"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal/testutil"
+	"github.com/tmc/nvcf-go/option"
 )
 
 func TestUsage(t *testing.T) {
@@ -22,6 +22,7 @@ func TestUsage(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	createFunctionResponse, err := client.Functions.New(context.TODO(), nvcf.FunctionNewParams{
 		InferenceURL: nvcf.F("https://example.com"),

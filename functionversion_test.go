@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nvcf-go"
-	"github.com/stainless-sdks/nvcf-go/internal/testutil"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go"
+	"github.com/tmc/nvcf-go/internal/testutil"
+	"github.com/tmc/nvcf-go/option"
 )
 
 func TestFunctionVersionNewWithOptionalParams(t *testing.T) {
@@ -23,6 +23,7 @@ func TestFunctionVersionNewWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.Versions.New(
 		context.TODO(),
@@ -82,6 +83,54 @@ func TestFunctionVersionNewWithOptionalParams(t *testing.T) {
 	}
 }
 
+func TestFunctionVersionGet(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := nvcf.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
+	)
+	_, err := client.Functions.Versions.Get(
+		context.TODO(),
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+	)
+	if err != nil {
+		var apierr *nvcf.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestFunctionVersionList(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := nvcf.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
+	)
+	_, err := client.Functions.Versions.List(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+	if err != nil {
+		var apierr *nvcf.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestFunctionVersionDelete(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -92,6 +141,7 @@ func TestFunctionVersionDelete(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	err := client.Functions.Versions.Delete(
 		context.TODO(),
