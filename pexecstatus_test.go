@@ -23,6 +23,7 @@ func TestPexecStatusGetWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Pexec.Status.Get(
 		context.TODO(),
