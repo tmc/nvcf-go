@@ -3,8 +3,8 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // FunctionManagementIDService contains methods and other services that help with

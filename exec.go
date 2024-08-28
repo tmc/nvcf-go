@@ -3,7 +3,7 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // ExecService contains methods and other services that help with interacting with
