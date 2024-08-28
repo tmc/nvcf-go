@@ -3,8 +3,8 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/internal/apierror"
-	"github.com/stainless-sdks/nvcf-go/shared"
+	"github.com/tmc/nvcf-go/internal/apierror"
+	"github.com/tmc/nvcf-go/shared"
 )
 
 type Error = apierror.Error

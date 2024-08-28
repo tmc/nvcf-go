@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/stainless-sdks/nvcf-go/internal/apijson"
+	"github.com/tmc/nvcf-go/internal/apijson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is

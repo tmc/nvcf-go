@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stainless-sdks/nvcf-go/internal/requestconfig"
-	"github.com/stainless-sdks/nvcf-go/option"
-	"github.com/stainless-sdks/nvcf-go/shared"
+	"github.com/tmc/nvcf-go/internal/requestconfig"
+	"github.com/tmc/nvcf-go/option"
+	"github.com/tmc/nvcf-go/shared"
 )
 
 // QueueFunctionVersionService contains methods and other services that help with

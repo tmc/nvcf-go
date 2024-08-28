@@ -3,7 +3,7 @@
 package nvcf
 
 import (
-	"github.com/stainless-sdks/nvcf-go/option"
+	"github.com/tmc/nvcf-go/option"
 )
 
 // UserSecretManagementFunctionService contains methods and other services that
