@@ -162,6 +162,8 @@ type ListFunctionsResponseFunction struct {
 	OwnedByDifferentAccount bool `json:"ownedByDifferentAccount"`
 	// Optional set of resources.
 	Resources []ListFunctionsResponseFunctionsResource `json:"resources"`
+	// Optional secret names
+	Secrets []string `json:"secrets"`
 	// Optional set of tags. Maximum allowed number of tags per function is 64. Maximum
 	// length of each tag is 128 chars.
 	Tags []string                          `json:"tags"`
@@ -193,6 +195,7 @@ type listFunctionsResponseFunctionJSON struct {
 	Models                  apijson.Field
 	OwnedByDifferentAccount apijson.Field
 	Resources               apijson.Field
+	Secrets                 apijson.Field
 	Tags                    apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field

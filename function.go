@@ -90,6 +90,8 @@ type FunctionNewParams struct {
 	Models param.Field[[]FunctionNewParamsModel] `json:"models"`
 	// Optional set of resources
 	Resources param.Field[[]FunctionNewParamsResource] `json:"resources"`
+	// Optional secrets
+	Secrets param.Field[[]FunctionNewParamsSecret] `json:"secrets"`
 	// Optional set of tags - could be empty. Provided by user
 	Tags param.Field[[]string] `json:"tags"`
 }
@@ -202,6 +204,18 @@ type FunctionNewParamsResource struct {
 }
 
 func (r FunctionNewParamsResource) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Data Transfer Object(DTO) representing secret name/value pair
+type FunctionNewParamsSecret struct {
+	// Secret name
+	Name param.Field[string] `json:"name,required"`
+	// Secret value
+	Value param.Field[string] `json:"value,required"`
+}
+
+func (r FunctionNewParamsSecret) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

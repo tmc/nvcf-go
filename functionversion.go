@@ -142,6 +142,8 @@ type CreateFunctionResponseFunction struct {
 	OwnedByDifferentAccount bool `json:"ownedByDifferentAccount"`
 	// Optional set of resources.
 	Resources []CreateFunctionResponseFunctionResource `json:"resources"`
+	// Optional secret names
+	Secrets []string `json:"secrets"`
 	// Optional set of tags. Maximum allowed number of tags per function is 64. Maximum
 	// length of each tag is 128 chars.
 	Tags []string                           `json:"tags"`
@@ -173,6 +175,7 @@ type createFunctionResponseFunctionJSON struct {
 	Models                  apijson.Field
 	OwnedByDifferentAccount apijson.Field
 	Resources               apijson.Field
+	Secrets                 apijson.Field
 	Tags                    apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
@@ -480,6 +483,8 @@ type FunctionVersionNewParams struct {
 	Models param.Field[[]FunctionVersionNewParamsModel] `json:"models"`
 	// Optional set of resources
 	Resources param.Field[[]FunctionVersionNewParamsResource] `json:"resources"`
+	// Optional secrets
+	Secrets param.Field[[]FunctionVersionNewParamsSecret] `json:"secrets"`
 	// Optional set of tags - could be empty. Provided by user
 	Tags param.Field[[]string] `json:"tags"`
 }
@@ -592,5 +597,17 @@ type FunctionVersionNewParamsResource struct {
 }
 
 func (r FunctionVersionNewParamsResource) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Data Transfer Object(DTO) representing secret name/value pair
+type FunctionVersionNewParamsSecret struct {
+	// Secret name
+	Name param.Field[string] `json:"name,required"`
+	// Secret value
+	Value param.Field[string] `json:"value,required"`
+}
+
+func (r FunctionVersionNewParamsSecret) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
