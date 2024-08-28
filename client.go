@@ -29,7 +29,6 @@ type Client struct {
 	Pexec                      *PexecService
 	Exec                       *ExecService
 	ClusterGroups              *ClusterGroupService
-	Clients                    *ClientService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -58,7 +57,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Pexec = NewPexecService(opts...)
 	r.Exec = NewExecService(opts...)
 	r.ClusterGroups = NewClusterGroupService(opts...)
-	r.Clients = NewClientService(opts...)
 
 	return
 }
