@@ -7,10 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
 
 	"github.com/tmc/nvcf-go/internal/apijson"
-	"github.com/tmc/nvcf-go/internal/apiquery"
 	"github.com/tmc/nvcf-go/internal/param"
 	"github.com/tmc/nvcf-go/internal/requestconfig"
 	"github.com/tmc/nvcf-go/option"
@@ -54,7 +52,7 @@ func (r *FunctionVersionService) New(ctx context.Context, functionID string, bod
 // authenticated NVIDIA Cloud Account. Requires either a bearer token or an api-key
 // with 'list_functions' or 'list_functions_details' scopes in the HTTP
 // Authorization header.
-func (r *FunctionVersionService) Get(ctx context.Context, functionID string, functionVersionID string, query FunctionVersionGetParams, opts ...option.RequestOption) (res *shared.FunctionResponse, err error) {
+func (r *FunctionVersionService) Get(ctx context.Context, functionID string, functionVersionID string, opts ...option.RequestOption) (res *shared.FunctionResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -65,7 +63,7 @@ func (r *FunctionVersionService) Get(ctx context.Context, functionID string, fun
 		return
 	}
 	path := fmt.Sprintf("v2/nvcf/functions/%s/versions/%s", functionID, functionVersionID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -73,14 +71,14 @@ func (r *FunctionVersionService) Get(ctx context.Context, functionID string, fun
 // NVIDIA Cloud Account. Requires either a bearer token or an api-key with
 // 'list_functions' or 'list_functions_details' scopes in the HTTP Authorization
 // header.
-func (r *FunctionVersionService) List(ctx context.Context, functionID string, query FunctionVersionListParams, opts ...option.RequestOption) (res *ListFunctionsResponse, err error) {
+func (r *FunctionVersionService) List(ctx context.Context, functionID string, opts ...option.RequestOption) (res *ListFunctionsResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
 		return
 	}
 	path := fmt.Sprintf("v2/nvcf/functions/%s/versions", functionID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -265,34 +263,4 @@ type FunctionVersionNewParamsSecret struct {
 
 func (r FunctionVersionNewParamsSecret) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-type FunctionVersionGetParams struct {
-	// Query param 'includeSecrets' indicates whether to include secret names for the
-	// function in the response.
-	IncludeSecrets param.Field[bool] `query:"includeSecrets"`
-}
-
-// URLQuery serializes [FunctionVersionGetParams]'s query parameters as
-// `url.Values`.
-func (r FunctionVersionGetParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
-}
-
-type FunctionVersionListParams struct {
-	// Query param 'includeSecrets' indicates whether to include secret names for the
-	// functions in the response.
-	IncludeSecrets param.Field[bool] `query:"includeSecrets"`
-}
-
-// URLQuery serializes [FunctionVersionListParams]'s query parameters as
-// `url.Values`.
-func (r FunctionVersionListParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
 }
