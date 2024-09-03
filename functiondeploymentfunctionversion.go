@@ -356,7 +356,7 @@ func (r FunctionDeploymentFunctionVersionInitiateDeploymentParamsDeploymentSpeci
 }
 
 type FunctionDeploymentFunctionVersionUpdateDeploymentParams struct {
-	// Deployment specs with Backend, GPU, instance-type, etc. details
+	// Deployment specs with GPU, instance-type, etc. details for update request
 	DeploymentSpecifications param.Field[[]FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecification] `json:"deploymentSpecifications,required"`
 }
 
@@ -364,7 +364,8 @@ func (r FunctionDeploymentFunctionVersionUpdateDeploymentParams) MarshalJSON() (
 	return apijson.MarshalRoot(r)
 }
 
-// Data Transfer Object(DTO) representing GPU specification.
+// Data Transfer Object(DTO) representing GPU specification for Deployment Update
+// case.
 type FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecification struct {
 	// GPU name from the cluster
 	GPU param.Field[string] `json:"gpu,required"`
@@ -374,23 +375,8 @@ type FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecificat
 	MaxInstances param.Field[int64] `json:"maxInstances,required"`
 	// Minimum number of spot instances for the deployment
 	MinInstances param.Field[int64] `json:"minInstances,required"`
-	// Specific attributes capabilities to deploy functions.
-	Attributes param.Field[[]string] `json:"attributes"`
-	// List of availability-zones(or clusters) in the cluster group
-	AvailabilityZones param.Field[[]string] `json:"availabilityZones"`
-	// Backend/CSP where the GPU powered instance will be launched
-	Backend param.Field[string] `json:"backend"`
-	// Specific clusters within spot instance or worker node powered by the selected
-	// instance-type to deploy function.
-	Clusters      param.Field[[]string]    `json:"clusters"`
-	Configuration param.Field[interface{}] `json:"configuration"`
 	// Max request concurrency between 1 (default) and 1024.
 	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
-	// Preferred order of deployment if there are several gpu specs.
-	PreferredOrder param.Field[int64] `json:"preferredOrder"`
-	// List of regions allowed to deploy. The instance or worker node will be in one of
-	// the specified geographical regions.
-	Regions param.Field[[]string] `json:"regions"`
 }
 
 func (r FunctionDeploymentFunctionVersionUpdateDeploymentParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
