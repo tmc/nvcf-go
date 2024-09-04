@@ -83,7 +83,7 @@ func TestFunctionVersionNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestFunctionVersionGet(t *testing.T) {
+func TestFunctionVersionGetWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -99,6 +99,9 @@ func TestFunctionVersionGet(t *testing.T) {
 		context.TODO(),
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		nvcf.FunctionVersionGetParams{
+			IncludeSecrets: nvcf.F(true),
+		},
 	)
 	if err != nil {
 		var apierr *nvcf.Error
@@ -109,7 +112,7 @@ func TestFunctionVersionGet(t *testing.T) {
 	}
 }
 
-func TestFunctionVersionList(t *testing.T) {
+func TestFunctionVersionListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -121,7 +124,13 @@ func TestFunctionVersionList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Functions.Versions.List(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+	_, err := client.Functions.Versions.List(
+		context.TODO(),
+		"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		nvcf.FunctionVersionListParams{
+			IncludeSecrets: nvcf.F(true),
+		},
+	)
 	if err != nil {
 		var apierr *nvcf.Error
 		if errors.As(err, &apierr) {
