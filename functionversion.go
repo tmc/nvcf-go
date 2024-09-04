@@ -73,14 +73,14 @@ func (r *FunctionVersionService) Get(ctx context.Context, functionID string, fun
 // NVIDIA Cloud Account. Requires either a bearer token or an api-key with
 // 'list_functions' or 'list_functions_details' scopes in the HTTP Authorization
 // header.
-func (r *FunctionVersionService) List(ctx context.Context, functionID string, query FunctionVersionListParams, opts ...option.RequestOption) (res *ListFunctionsResponse, err error) {
+func (r *FunctionVersionService) List(ctx context.Context, functionID string, opts ...option.RequestOption) (res *ListFunctionsResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
 		return
 	}
 	path := fmt.Sprintf("v2/nvcf/functions/%s/versions", functionID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -276,21 +276,6 @@ type FunctionVersionGetParams struct {
 // URLQuery serializes [FunctionVersionGetParams]'s query parameters as
 // `url.Values`.
 func (r FunctionVersionGetParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
-}
-
-type FunctionVersionListParams struct {
-	// Query param 'includeSecrets' indicates whether to include secret names for the
-	// functions in the response.
-	IncludeSecrets param.Field[bool] `query:"includeSecrets"`
-}
-
-// URLQuery serializes [FunctionVersionListParams]'s query parameters as
-// `url.Values`.
-func (r FunctionVersionListParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
