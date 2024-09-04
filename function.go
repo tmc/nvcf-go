@@ -220,6 +220,9 @@ func (r FunctionNewParamsSecret) MarshalJSON() (data []byte, err error) {
 }
 
 type FunctionListParams struct {
+	// Query param 'includeSecrets' indicates whether to include secret names for
+	// private functions in the response.
+	IncludeSecrets param.Field[bool] `query:"includeSecrets"`
 	// Query param 'visibility' indicates the kind of functions to be included in the
 	// response.
 	Visibility param.Field[[]FunctionListParamsVisibility] `query:"visibility"`
