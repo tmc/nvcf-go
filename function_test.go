@@ -92,8 +92,7 @@ func TestFunctionListWithOptionalParams(t *testing.T) {
 		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.List(context.TODO(), nvcf.FunctionListParams{
-		IncludeSecrets: nvcf.F(true),
-		Visibility:     nvcf.F([]nvcf.FunctionListParamsVisibility{nvcf.FunctionListParamsVisibilityAuthorized}),
+		Visibility: nvcf.F([]nvcf.FunctionListParamsVisibility{nvcf.FunctionListParamsVisibilityAuthorized}),
 	})
 	if err != nil {
 		var apierr *nvcf.Error
