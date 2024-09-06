@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/tmc/nvcf-go@v0.1.0-alpha.1'
+go get -u 'github.com/tmc/nvcf-go@v0.1.0-alpha.2'
 ```
 
 <!-- x-release-please-end -->
@@ -45,13 +45,10 @@ import (
 	"fmt"
 
 	"github.com/tmc/nvcf-go"
-	"github.com/tmc/nvcf-go/option"
 )
 
 func main() {
-	client := nvcf.NewClient(
-		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("NGC_CLI_API_KEY")
-	)
+	client := nvcf.NewClient()
 	createFunctionResponse, err := client.Functions.New(context.TODO(), nvcf.FunctionNewParams{
 		InferenceURL: nvcf.F("https://example.com"),
 		Name:         nvcf.F("x"),

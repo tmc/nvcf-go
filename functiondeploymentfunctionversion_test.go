@@ -23,7 +23,6 @@ func TestFunctionDeploymentFunctionVersionDeleteDeploymentWithOptionalParams(t *
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.DeleteDeployment(
 		context.TODO(),
@@ -52,7 +51,6 @@ func TestFunctionDeploymentFunctionVersionInitiateDeployment(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.InitiateDeployment(
 		context.TODO(),
@@ -120,7 +118,6 @@ func TestFunctionDeploymentFunctionVersionGetDeployment(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.GetDeployment(
 		context.TODO(),
@@ -146,7 +143,6 @@ func TestFunctionDeploymentFunctionVersionUpdateDeployment(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.FunctionDeployment.Functions.Versions.UpdateDeployment(
 		context.TODO(),
@@ -158,40 +154,19 @@ func TestFunctionDeploymentFunctionVersionUpdateDeployment(t *testing.T) {
 				InstanceType:          nvcf.F("instanceType"),
 				MaxInstances:          nvcf.F(int64(0)),
 				MinInstances:          nvcf.F(int64(0)),
-				Attributes:            nvcf.F([]string{"string"}),
-				AvailabilityZones:     nvcf.F([]string{"string", "string", "string"}),
-				Backend:               nvcf.F("backend"),
-				Clusters:              nvcf.F([]string{"string"}),
-				Configuration:         nvcf.F[any](map[string]interface{}{}),
 				MaxRequestConcurrency: nvcf.F(int64(1)),
-				PreferredOrder:        nvcf.F(int64(1)),
-				Regions:               nvcf.F([]string{"string"}),
 			}, {
 				GPU:                   nvcf.F("gpu"),
 				InstanceType:          nvcf.F("instanceType"),
 				MaxInstances:          nvcf.F(int64(0)),
 				MinInstances:          nvcf.F(int64(0)),
-				Attributes:            nvcf.F([]string{"string"}),
-				AvailabilityZones:     nvcf.F([]string{"string", "string", "string"}),
-				Backend:               nvcf.F("backend"),
-				Clusters:              nvcf.F([]string{"string"}),
-				Configuration:         nvcf.F[any](map[string]interface{}{}),
 				MaxRequestConcurrency: nvcf.F(int64(1)),
-				PreferredOrder:        nvcf.F(int64(1)),
-				Regions:               nvcf.F([]string{"string"}),
 			}, {
 				GPU:                   nvcf.F("gpu"),
 				InstanceType:          nvcf.F("instanceType"),
 				MaxInstances:          nvcf.F(int64(0)),
 				MinInstances:          nvcf.F(int64(0)),
-				Attributes:            nvcf.F([]string{"string"}),
-				AvailabilityZones:     nvcf.F([]string{"string", "string", "string"}),
-				Backend:               nvcf.F("backend"),
-				Clusters:              nvcf.F([]string{"string"}),
-				Configuration:         nvcf.F[any](map[string]interface{}{}),
 				MaxRequestConcurrency: nvcf.F(int64(1)),
-				PreferredOrder:        nvcf.F(int64(1)),
-				Regions:               nvcf.F([]string{"string"}),
 			}}),
 		},
 	)

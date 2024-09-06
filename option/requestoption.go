@@ -228,10 +228,10 @@ func WithEnvironmentProduction() RequestOption {
 	return WithBaseURL("https://api.nvcf.nvidia.com/")
 }
 
-// WithBearerToken returns a RequestOption that sets the client setting "bearer_token".
-func WithBearerToken(value string) RequestOption {
+// WithAuthToken returns a RequestOption that sets the client setting "auth_token".
+func WithAuthToken(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
-		r.BearerToken = value
+		r.AuthToken = value
 		return nil
 	}
 }
