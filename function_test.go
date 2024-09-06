@@ -23,7 +23,6 @@ func TestFunctionNewWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.New(context.TODO(), nvcf.FunctionNewParams{
 		InferenceURL:  nvcf.F("https://example.com"),
@@ -89,7 +88,6 @@ func TestFunctionListWithOptionalParams(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Functions.List(context.TODO(), nvcf.FunctionListParams{
 		Visibility: nvcf.F([]nvcf.FunctionListParamsVisibility{nvcf.FunctionListParamsVisibilityAuthorized}),
