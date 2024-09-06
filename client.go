@@ -39,7 +39,7 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("NGC_CLI_API_KEY"); ok {
-		defaults = append(defaults, option.WithBearerToken(o))
+		defaults = append(defaults, option.WithAuthToken(o))
 	}
 	opts = append(defaults, opts...)
 

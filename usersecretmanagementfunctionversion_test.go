@@ -23,7 +23,6 @@ func TestUserSecretManagementFunctionVersionUpdateSecrets(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	err := client.UserSecretManagement.Functions.Versions.UpdateSecrets(
 		context.TODO(),

@@ -23,7 +23,6 @@ func TestClusterGroupList(t *testing.T) {
 	}
 	client := nvcf.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.ClusterGroups.List(context.TODO())
 	if err != nil {
