@@ -120,7 +120,8 @@ type FunctionResponseFunction struct {
 	CreatedAt time.Time `json:"createdAt,required" format:"date-time"`
 	// Used to indicate a STREAMING function. Defaults to DEFAULT.
 	FunctionType FunctionResponseFunctionFunctionType `json:"functionType,required"`
-	// Health endpoint for the container or helmChart
+	// Health endpoint for the container or helmChart. Deprecated, use health.uri
+	// instead.
 	HealthUri string `json:"healthUri,required" format:"uri"`
 	// Function name
 	Name string `json:"name,required"`
@@ -370,7 +371,7 @@ type FunctionResponseFunctionHealth struct {
 	// HTTP/gPRC protocol type for health endpoint
 	Protocol FunctionResponseFunctionHealthProtocol `json:"protocol,required"`
 	// ISO 8601 duration string in PnDTnHnMn.nS format
-	Timeout string `json:"timeout,required" format:"PnDTnHnMn.nS"`
+	Timeout string `json:"timeout,required" format:"duration"`
 	// Health endpoint for the container or the helmChart
 	Uri  string                             `json:"uri,required" format:"uri"`
 	JSON functionResponseFunctionHealthJSON `json:"-"`
