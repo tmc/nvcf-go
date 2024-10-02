@@ -202,7 +202,7 @@ type FunctionVersionNewParamsHealth struct {
 	// HTTP/gPRC protocol type for health endpoint
 	Protocol param.Field[FunctionVersionNewParamsHealthProtocol] `json:"protocol,required"`
 	// ISO 8601 duration string in PnDTnHnMn.nS format
-	Timeout param.Field[string] `json:"timeout,required" format:"PnDTnHnMn.nS"`
+	Timeout param.Field[string] `json:"timeout,required" format:"duration"`
 	// Health endpoint for the container or the helmChart
 	Uri param.Field[string] `json:"uri,required" format:"uri"`
 }
