@@ -219,11 +219,3 @@ Methods:
 - <code title="get /v2/nvcf/clusterGroups">client.ClusterGroups.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClusterGroupService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClusterGroupsResponse">ClusterGroupsResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # Clients
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClientGetResponse">ClientGetResponse</a>
-
-Methods:
-
-- <code title="get /v2/nvcf/clients/{clientId}">client.Clients.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClientService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, clientID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClientGetResponse">ClientGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

@@ -85,7 +85,8 @@ type CreateFunctionResponseFunction struct {
 	CreatedAt time.Time `json:"createdAt,required" format:"date-time"`
 	// Used to indicate a STREAMING function. Defaults to DEFAULT.
 	FunctionType CreateFunctionResponseFunctionFunctionType `json:"functionType,required"`
-	// Health endpoint for the container or helmChart
+	// Health endpoint for the container or helmChart. Deprecated, use health.uri
+	// instead.
 	HealthUri string `json:"healthUri,required" format:"uri"`
 	// Function name
 	Name string `json:"name,required"`
@@ -335,7 +336,7 @@ type CreateFunctionResponseFunctionHealth struct {
 	// HTTP/gPRC protocol type for health endpoint
 	Protocol CreateFunctionResponseFunctionHealthProtocol `json:"protocol,required"`
 	// ISO 8601 duration string in PnDTnHnMn.nS format
-	Timeout string `json:"timeout,required" format:"PnDTnHnMn.nS"`
+	Timeout string `json:"timeout,required" format:"duration"`
 	// Health endpoint for the container or the helmChart
 	Uri  string                                   `json:"uri,required" format:"uri"`
 	JSON createFunctionResponseFunctionHealthJSON `json:"-"`
@@ -466,7 +467,8 @@ type ListFunctionsResponseFunction struct {
 	CreatedAt time.Time `json:"createdAt,required" format:"date-time"`
 	// Used to indicate a STREAMING function. Defaults to DEFAULT.
 	FunctionType ListFunctionsResponseFunctionsFunctionType `json:"functionType,required"`
-	// Health endpoint for the container or helmChart
+	// Health endpoint for the container or helmChart. Deprecated, use health.uri
+	// instead.
 	HealthUri string `json:"healthUri,required" format:"uri"`
 	// Function name
 	Name string `json:"name,required"`
@@ -716,7 +718,7 @@ type ListFunctionsResponseFunctionsHealth struct {
 	// HTTP/gPRC protocol type for health endpoint
 	Protocol ListFunctionsResponseFunctionsHealthProtocol `json:"protocol,required"`
 	// ISO 8601 duration string in PnDTnHnMn.nS format
-	Timeout string `json:"timeout,required" format:"PnDTnHnMn.nS"`
+	Timeout string `json:"timeout,required" format:"duration"`
 	// Health endpoint for the container or the helmChart
 	Uri  string                                   `json:"uri,required" format:"uri"`
 	JSON listFunctionsResponseFunctionsHealthJSON `json:"-"`

@@ -54,7 +54,7 @@ func (r *AuthorizedAccountFunctionService) Get(ctx context.Context, functionID s
 }
 
 // Deletes all the extra NVIDIA Cloud Accounts that were authorized to invoke the
-// function and all its versions. If a function version has its own set of
+// function and all its versions. If a function versions has its own set of
 // authorized accounts, those are not deleted. If the specified function is public,
 // then Account Admin cannot perform this operation. Access to this functionality
 // mandates the inclusion of a bearer token with the 'authorize_clients' scope in
