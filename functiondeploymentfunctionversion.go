@@ -208,21 +208,13 @@ type DeploymentResponseDeploymentDeploymentSpecification struct {
 	// instance-type to deploy function.
 	Clusters      []string    `json:"clusters"`
 	Configuration interface{} `json:"configuration"`
-	// Architecture details of the CPU
-	CPUArch string `json:"cpuArch"`
-	// GPU driver version
-	DriverVersion string `json:"driverVersion"`
 	// Max request concurrency between 1 (default) and 1024.
 	MaxRequestConcurrency int64 `json:"maxRequestConcurrency"`
-	// Operating system details
-	Os string `json:"os"`
 	// Preferred order of deployment if there are several gpu specs.
 	PreferredOrder int64 `json:"preferredOrder"`
 	// List of regions allowed to deploy. The instance or worker node will be in one of
 	// the specified geographical regions.
-	Regions []string `json:"regions"`
-	// The amount of available storage, e.g. 80G
-	Storage string                                                  `json:"storage"`
+	Regions []string                                                `json:"regions"`
 	JSON    deploymentResponseDeploymentDeploymentSpecificationJSON `json:"-"`
 }
 
@@ -238,13 +230,9 @@ type deploymentResponseDeploymentDeploymentSpecificationJSON struct {
 	Backend               apijson.Field
 	Clusters              apijson.Field
 	Configuration         apijson.Field
-	CPUArch               apijson.Field
-	DriverVersion         apijson.Field
 	MaxRequestConcurrency apijson.Field
-	Os                    apijson.Field
 	PreferredOrder        apijson.Field
 	Regions               apijson.Field
-	Storage               apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -354,21 +342,13 @@ type FunctionDeploymentFunctionVersionInitiateDeploymentParamsDeploymentSpecific
 	// instance-type to deploy function.
 	Clusters      param.Field[[]string]    `json:"clusters"`
 	Configuration param.Field[interface{}] `json:"configuration"`
-	// Architecture details of the CPU
-	CPUArch param.Field[string] `json:"cpuArch"`
-	// GPU driver version
-	DriverVersion param.Field[string] `json:"driverVersion"`
 	// Max request concurrency between 1 (default) and 1024.
 	MaxRequestConcurrency param.Field[int64] `json:"maxRequestConcurrency"`
-	// Operating system details
-	Os param.Field[string] `json:"os"`
 	// Preferred order of deployment if there are several gpu specs.
 	PreferredOrder param.Field[int64] `json:"preferredOrder"`
 	// List of regions allowed to deploy. The instance or worker node will be in one of
 	// the specified geographical regions.
 	Regions param.Field[[]string] `json:"regions"`
-	// The amount of available storage, e.g. 80G
-	Storage param.Field[string] `json:"storage"`
 }
 
 func (r FunctionDeploymentFunctionVersionInitiateDeploymentParamsDeploymentSpecification) MarshalJSON() (data []byte, err error) {
