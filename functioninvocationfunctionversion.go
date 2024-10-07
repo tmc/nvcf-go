@@ -7,7 +7,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"reflect"
 
+	"github.com/tidwall/gjson"
 	"github.com/tmc/nvcf-go/internal/apijson"
 	"github.com/tmc/nvcf-go/internal/param"
 	"github.com/tmc/nvcf-go/internal/requestconfig"
@@ -48,7 +50,7 @@ func NewFunctionInvocationFunctionVersionService(opts ...option.RequestOption) (
 // in order. If no in-progress response is received during polling you will receive
 // the most recent in-progress response. Only the first 256 unread in-progress
 // messages are kept.
-func (r *FunctionInvocationFunctionVersionService) Invoke(ctx context.Context, functionID string, versionID string, params FunctionInvocationFunctionVersionInvokeParams, opts ...option.RequestOption) (res *FunctionInvocationFunctionVersionInvokeResponse, err error) {
+func (r *FunctionInvocationFunctionVersionService) Invoke(ctx context.Context, functionID string, versionID string, params FunctionInvocationFunctionVersionInvokeParams, opts ...option.RequestOption) (res *FunctionInvocationFunctionVersionInvokeResponseUnion, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
 		err = errors.New("missing required functionId parameter")
@@ -63,21 +65,42 @@ func (r *FunctionInvocationFunctionVersionService) Invoke(ctx context.Context, f
 	return
 }
 
-type FunctionInvocationFunctionVersionInvokeResponse struct {
-	Char     string                                              `json:"char"`
-	Direct   bool                                                `json:"direct"`
-	Double   float64                                             `json:"double"`
-	Float    float64                                             `json:"float"`
-	Int      int64                                               `json:"int"`
-	Long     int64                                               `json:"long"`
-	ReadOnly bool                                                `json:"readOnly"`
-	Short    int64                                               `json:"short"`
-	JSON     functionInvocationFunctionVersionInvokeResponseJSON `json:"-"`
+// Union satisfied by [FunctionInvocationFunctionVersionInvokeResponseObject] or
+// [FunctionInvocationFunctionVersionInvokeResponseArray].
+type FunctionInvocationFunctionVersionInvokeResponseUnion interface {
+	implementsFunctionInvocationFunctionVersionInvokeResponseUnion()
 }
 
-// functionInvocationFunctionVersionInvokeResponseJSON contains the JSON metadata
-// for the struct [FunctionInvocationFunctionVersionInvokeResponse]
-type functionInvocationFunctionVersionInvokeResponseJSON struct {
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*FunctionInvocationFunctionVersionInvokeResponseUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(FunctionInvocationFunctionVersionInvokeResponseObject{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(FunctionInvocationFunctionVersionInvokeResponseArray{}),
+		},
+	)
+}
+
+type FunctionInvocationFunctionVersionInvokeResponseObject struct {
+	Char     string                                                    `json:"char"`
+	Direct   bool                                                      `json:"direct"`
+	Double   float64                                                   `json:"double"`
+	Float    float64                                                   `json:"float"`
+	Int      int64                                                     `json:"int"`
+	Long     int64                                                     `json:"long"`
+	ReadOnly bool                                                      `json:"readOnly"`
+	Short    int64                                                     `json:"short"`
+	JSON     functionInvocationFunctionVersionInvokeResponseObjectJSON `json:"-"`
+}
+
+// functionInvocationFunctionVersionInvokeResponseObjectJSON contains the JSON
+// metadata for the struct [FunctionInvocationFunctionVersionInvokeResponseObject]
+type functionInvocationFunctionVersionInvokeResponseObjectJSON struct {
 	Char        apijson.Field
 	Direct      apijson.Field
 	Double      apijson.Field
@@ -90,11 +113,55 @@ type functionInvocationFunctionVersionInvokeResponseJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *FunctionInvocationFunctionVersionInvokeResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *FunctionInvocationFunctionVersionInvokeResponseObject) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r functionInvocationFunctionVersionInvokeResponseJSON) RawJSON() string {
+func (r functionInvocationFunctionVersionInvokeResponseObjectJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r FunctionInvocationFunctionVersionInvokeResponseObject) implementsFunctionInvocationFunctionVersionInvokeResponseUnion() {
+}
+
+type FunctionInvocationFunctionVersionInvokeResponseArray []FunctionInvocationFunctionVersionInvokeResponseArrayItem
+
+func (r FunctionInvocationFunctionVersionInvokeResponseArray) implementsFunctionInvocationFunctionVersionInvokeResponseUnion() {
+}
+
+type FunctionInvocationFunctionVersionInvokeResponseArrayItem struct {
+	Char     string                                                       `json:"char"`
+	Direct   bool                                                         `json:"direct"`
+	Double   float64                                                      `json:"double"`
+	Float    float64                                                      `json:"float"`
+	Int      int64                                                        `json:"int"`
+	Long     int64                                                        `json:"long"`
+	ReadOnly bool                                                         `json:"readOnly"`
+	Short    int64                                                        `json:"short"`
+	JSON     functionInvocationFunctionVersionInvokeResponseArrayItemJSON `json:"-"`
+}
+
+// functionInvocationFunctionVersionInvokeResponseArrayItemJSON contains the JSON
+// metadata for the struct
+// [FunctionInvocationFunctionVersionInvokeResponseArrayItem]
+type functionInvocationFunctionVersionInvokeResponseArrayItemJSON struct {
+	Char        apijson.Field
+	Direct      apijson.Field
+	Double      apijson.Field
+	Float       apijson.Field
+	Int         apijson.Field
+	Long        apijson.Field
+	ReadOnly    apijson.Field
+	Short       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *FunctionInvocationFunctionVersionInvokeResponseArrayItem) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r functionInvocationFunctionVersionInvokeResponseArrayItemJSON) RawJSON() string {
 	return r.raw
 }
 
