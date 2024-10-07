@@ -211,8 +211,8 @@ func (r FunctionNewParamsResource) MarshalJSON() (data []byte, err error) {
 type FunctionNewParamsSecret struct {
 	// Secret name
 	Name param.Field[string] `json:"name,required"`
-	// Secret value must be 1 - 4096 chars long
-	Value param.Field[interface{}] `json:"value"`
+	// Secret value
+	Value param.Field[string] `json:"value,required"`
 }
 
 func (r FunctionNewParamsSecret) MarshalJSON() (data []byte, err error) {
