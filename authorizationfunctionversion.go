@@ -40,9 +40,10 @@ func NewAuthorizationFunctionVersionService(opts ...option.RequestOption) (r *Au
 // response with status 404. If the specified account is already in the set of
 // existing authorized accounts that are directly associated with the function
 // version, it results in a response wit status code 409. If a function is public,
-// then Account Admin cannot perform this operation. Access to this functionality
-// mandates the inclusion of a bearer token with the 'authorize_clients' scope in
-// the HTTP Authorization header
+// then Account Admin cannot perform this operation. Note that the response does
+// not include inherited authorized accounts that were added at the function level.
+// Access to this functionality mandates the inclusion of a bearer token with the
+// 'authorize_clients' scope in the HTTP Authorization header
 func (r *AuthorizationFunctionVersionService) Add(ctx context.Context, functionID string, functionVersionID string, body AuthorizationFunctionVersionAddParams, opts ...option.RequestOption) (res *shared.AuthorizedPartiesResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
@@ -65,9 +66,10 @@ func (r *AuthorizationFunctionVersionService) Add(ctx context.Context, functionI
 // authorized account is not in the set of existing authorized parties that are
 // directly associated with the specified function version, it results in a
 // response with status code 400. If the specified function version is public, then
-// Account Admin cannot perform this operation. Access to this functionality
-// mandates the inclusion of a bearer token with the 'authorize_clients' scope in
-// the HTTP Authorization header
+// Account Admin cannot perform this operation. Note that the response does not
+// include inherited authorized accounts that were added at the function level.
+// Access to this functionality mandates the inclusion of a bearer token with the
+// 'authorize_clients' scope in the HTTP Authorization header
 func (r *AuthorizationFunctionVersionService) Remove(ctx context.Context, functionID string, functionVersionID string, body AuthorizationFunctionVersionRemoveParams, opts ...option.RequestOption) (res *shared.AuthorizedPartiesResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
