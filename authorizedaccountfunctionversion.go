@@ -57,9 +57,10 @@ func (r *AuthorizedAccountFunctionVersionService) Get(ctx context.Context, funct
 // Deletes all the authorized accounts that are directly associated with the
 // specified function version. Authorized parties that are inherited by the
 // function version are not deleted. If the specified function version is public,
-// then Account Admin cannot perform this operation. Access to this functionality
-// mandates the inclusion of a bearer token with the 'authorize_clients' scope in
-// the HTTP Authorization header
+// then Account Admin cannot perform this operation. Note that the response does
+// not include inherited authorized accounts that were added at the function level.
+// Access to this functionality mandates the inclusion of a bearer token with the
+// 'authorize_clients' scope in the HTTP Authorization header
 func (r *AuthorizedAccountFunctionVersionService) Delete(ctx context.Context, functionID string, functionVersionID string, opts ...option.RequestOption) (res *shared.AuthorizedPartiesResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {
@@ -79,9 +80,10 @@ func (r *AuthorizedAccountFunctionVersionService) Delete(ctx context.Context, fu
 // version. By default, a function belongs to the NVIDIA Cloud Account that created
 // it, and the credentials used for function invocation must reference the same
 // NVIDIA Cloud Account. Upon invocation of this endpoint, any existing authorized
-// accounts will be overwritten by the newly specified authorized accounts. Access
-// to this functionality mandates the inclusion of a bearer token with the
-// 'authorize_clients' scope in the HTTP Authorization header
+// accounts will be overwritten by the newly specified authorized accounts. Note
+// that the response does NOT include inherited authorized accounts that were added
+// at the function level. Access to this functionality mandates the inclusion of a
+// bearer token with the 'authorize_clients' scope in the HTTP Authorization header
 func (r *AuthorizedAccountFunctionVersionService) Authorize(ctx context.Context, functionID string, functionVersionID string, body AuthorizedAccountFunctionVersionAuthorizeParams, opts ...option.RequestOption) (res *shared.AuthorizedPartiesResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if functionID == "" {

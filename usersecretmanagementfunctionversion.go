@@ -66,8 +66,8 @@ func (r UserSecretManagementFunctionVersionUpdateSecretsParams) MarshalJSON() (d
 type UserSecretManagementFunctionVersionUpdateSecretsParamsSecret struct {
 	// Secret name
 	Name param.Field[string] `json:"name,required"`
-	// Secret value
-	Value param.Field[string] `json:"value,required"`
+	// Secret value must be 1 - 4096 chars long
+	Value param.Field[interface{}] `json:"value"`
 }
 
 func (r UserSecretManagementFunctionVersionUpdateSecretsParamsSecret) MarshalJSON() (data []byte, err error) {

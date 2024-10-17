@@ -59,21 +59,21 @@ Methods:
 
 Response Types:
 
-- <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionInvokeResponse">FunctionInvocationFunctionInvokeResponse</a>
+- <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionInvokeResponseUnion">FunctionInvocationFunctionInvokeResponseUnion</a>
 
 Methods:
 
-- <code title="post /v2/nvcf/pexec/functions/{functionId}">client.FunctionInvocation.Functions.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionService.Invoke">Invoke</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, functionID <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionInvokeParams">FunctionInvocationFunctionInvokeParams</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionInvokeResponse">FunctionInvocationFunctionInvokeResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /v2/nvcf/pexec/functions/{functionId}">client.FunctionInvocation.Functions.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionService.Invoke">Invoke</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, functionID <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionInvokeParams">FunctionInvocationFunctionInvokeParams</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionInvokeResponseUnion">FunctionInvocationFunctionInvokeResponseUnion</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ### Versions
 
 Response Types:
 
-- <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionInvokeResponse">FunctionInvocationFunctionVersionInvokeResponse</a>
+- <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionInvokeResponseUnion">FunctionInvocationFunctionVersionInvokeResponseUnion</a>
 
 Methods:
 
-- <code title="post /v2/nvcf/pexec/functions/{functionId}/versions/{versionId}">client.FunctionInvocation.Functions.Versions.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionService.Invoke">Invoke</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, functionID <a href="https://pkg.go.dev/builtin#string">string</a>, versionID <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionInvokeParams">FunctionInvocationFunctionVersionInvokeParams</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionInvokeResponse">FunctionInvocationFunctionVersionInvokeResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /v2/nvcf/pexec/functions/{functionId}/versions/{versionId}">client.FunctionInvocation.Functions.Versions.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionService.Invoke">Invoke</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, functionID <a href="https://pkg.go.dev/builtin#string">string</a>, versionID <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionInvokeParams">FunctionInvocationFunctionVersionInvokeParams</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#FunctionInvocationFunctionVersionInvokeResponseUnion">FunctionInvocationFunctionVersionInvokeResponseUnion</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # EnvelopeFunctionInvocation
 
@@ -219,11 +219,3 @@ Methods:
 - <code title="get /v2/nvcf/clusterGroups">client.ClusterGroups.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClusterGroupService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClusterGroupsResponse">ClusterGroupsResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # Clients
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClientGetResponse">ClientGetResponse</a>
-
-Methods:
-
-- <code title="get /v2/nvcf/clients/{clientId}">client.Clients.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClientService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, clientID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/tmc/nvcf-go">nvcf</a>.<a href="https://pkg.go.dev/github.com/tmc/nvcf-go#ClientGetResponse">ClientGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

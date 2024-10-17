@@ -31,7 +31,7 @@ func TestUserSecretManagementFunctionVersionUpdateSecrets(t *testing.T) {
 		nvcf.UserSecretManagementFunctionVersionUpdateSecretsParams{
 			Secrets: nvcf.F([]nvcf.UserSecretManagementFunctionVersionUpdateSecretsParamsSecret{{
 				Name:  nvcf.F("x"),
-				Value: nvcf.F("x"),
+				Value: nvcf.F[any](map[string]interface{}{}),
 			}}),
 		},
 	)

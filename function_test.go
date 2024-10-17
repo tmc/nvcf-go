@@ -65,7 +65,7 @@ func TestFunctionNewWithOptionalParams(t *testing.T) {
 		}}),
 		Secrets: nvcf.F([]nvcf.FunctionNewParamsSecret{{
 			Name:  nvcf.F("x"),
-			Value: nvcf.F("x"),
+			Value: nvcf.F[any](map[string]interface{}{}),
 		}}),
 		Tags: nvcf.F([]string{"string"}),
 	})
