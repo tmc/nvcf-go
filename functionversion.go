@@ -202,7 +202,7 @@ type FunctionVersionNewParamsHealth struct {
 	// HTTP/gPRC protocol type for health endpoint
 	Protocol param.Field[FunctionVersionNewParamsHealthProtocol] `json:"protocol,required"`
 	// ISO 8601 duration string in PnDTnHnMn.nS format
-	Timeout param.Field[string] `json:"timeout,required" format:"PnDTnHnMn.nS"`
+	Timeout param.Field[string] `json:"timeout,required" format:"duration"`
 	// Health endpoint for the container or the helmChart
 	Uri param.Field[string] `json:"uri,required" format:"uri"`
 }
@@ -259,8 +259,8 @@ func (r FunctionVersionNewParamsResource) MarshalJSON() (data []byte, err error)
 type FunctionVersionNewParamsSecret struct {
 	// Secret name
 	Name param.Field[string] `json:"name,required"`
-	// Secret value
-	Value param.Field[string] `json:"value,required"`
+	// Secret value must be 1 - 4096 chars long
+	Value param.Field[interface{}] `json:"value"`
 }
 
 func (r FunctionVersionNewParamsSecret) MarshalJSON() (data []byte, err error) {
